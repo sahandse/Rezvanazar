@@ -4,7 +4,7 @@ import { homeworkQuestions } from "../data/homework";
 
 interface HomeworkProps {
   student: Student;
-  onComplete: () => void;
+  onComplete: (score: number, total: number) => void;
   onExit: () => void;
 }
 
@@ -28,7 +28,7 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
   function handleNext() {
     if (isLast) {
       setFinished(true);
-      onComplete();
+      onComplete(score, homeworkQuestions.length);
     } else {
       setStep((s) => s + 1);
       setSelected(null);

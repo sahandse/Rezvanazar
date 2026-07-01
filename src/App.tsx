@@ -1,22 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Classroom from "./components/Classroom";
 import LoginModal from "./components/LoginModal";
 import WelcomeAnimation from "./components/WelcomeAnimation";
 import Profile from "./components/Profile";
 import Homework from "./components/Homework";
+import AdminLogin from "./components/AdminLogin";
+import AdminPanel from "./components/AdminPanel";
 import { students } from "./data/students";
-import type { Student } from "./types";
+import type { ActivityLog, Student } from "./types";
 
-const STORAGE_KEY = "completed-seats";
+const STORAGE_KEY = "activity-log";
 
 type View = "welcome" | "profile" | "exam";
 
-function loadCompleted(): Set<number> {
+function loadActivityLog(): ActivityLog {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? new Set(JSON.parse(raw)) : new Set();
+    return raw ? JSON.parse(raw) : {};
   } catch {
-    return new Set();
+    return {};
   }
 }
 
@@ -24,11 +26,15 @@ function App() {
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [session, setSession] = useState<Student | null>(null);
   const [view, setView] = useState<View>("welcome");
-  const [completedSeats, setCompletedSeats] = useState<Set<number>>(loadCompleted);
+  const [activityLog, setActivityLog] = useState<ActivityLog>(loadActivityLog);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const completedSeats = useMemo(() => new Set(Object.keys(activityLog).map(Number)), [activityLog]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...completedSeats]));
-  }, [completedSeats]);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(activityLog));
+  }, [activityLog]);
 
   function handleLoginSuccess(student: Student) {
     setSelectedStudent(null);
@@ -36,9 +42,12 @@ function App() {
     setView("welcome");
   }
 
-  function handleHomeworkComplete() {
+  function handleHomeworkComplete(score: number, total: number) {
     if (session) {
-      setCompletedSeats((prev) => new Set(prev).add(session.seat));
+      setActivityLog((prev) => ({
+        ...prev,
+        [session.seat]: { score, total, completedAt: new Date().toISOString() },
+      }));
     }
   }
 
@@ -46,11 +55,26 @@ function App() {
     setSession(null);
   }
 
+  if (isAdmin) {
+    return (
+      <div className="app">
+        <header className="app__header">
+          <h1>دبستان پسرانه تشیع ۲</h1>
+          <p>پایه سوم ابتدایی — آموزگار و طراح: آیدا رضوان‌آذر</p>
+        </header>
+        <AdminPanel students={students} activityLog={activityLog} onLogout={() => setIsAdmin(false)} />
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <header className="app__header">
         <h1>دبستان پسرانه تشیع ۲</h1>
         <p>پایه سوم ابتدایی — آموزگار و طراح: آیدا رضوان‌آذر</p>
+        <button className="app__admin-link" onClick={() => setShowAdminLogin(true)}>
+          ورود مدیر
+        </button>
       </header>
 
       {!session && (
@@ -79,6 +103,16 @@ function App() {
           student={selectedStudent}
           onClose={() => setSelectedStudent(null)}
           onSuccess={handleLoginSuccess}
+        />
+      )}
+
+      {showAdminLogin && (
+        <AdminLogin
+          onClose={() => setShowAdminLogin(false)}
+          onSuccess={() => {
+            setShowAdminLogin(false);
+            setIsAdmin(true);
+          }}
         />
       )}
     </div>
