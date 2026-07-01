@@ -412,14 +412,13 @@ body {
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-.homework__speak-btn:hover:not(:disabled) {
+.homework__speak-btn:hover {
   border-color: #a9744a;
   background: #f3e3c3;
 }
 
-.homework__speak-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.homework__speak-btn--fallback {
+  opacity: 0.55;
 }
 
 .homework__options {

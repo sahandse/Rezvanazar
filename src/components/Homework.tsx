@@ -112,14 +112,13 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
           <h3 className="homework__question">{question.question}</h3>
           <button
             type="button"
-            className="homework__speak-btn"
+            className={`homework__speak-btn${voiceAvailable ? "" : " homework__speak-btn--fallback"}`}
             onClick={() => speakPersian(question.question)}
-            disabled={!voiceAvailable}
             aria-label="خواندن سؤال"
             title={
               voiceAvailable
                 ? "خواندن سؤال"
-                : "صدای فارسی روی این دستگاه نصب نیست (از تنظیمات دستگاه اضافه کنید)"
+                : "صدای فارسی روی این دستگاه نصب نیست؛ با صدای پیش‌فرض خوانده می‌شود"
             }
           >
             🔊
