@@ -4,8 +4,6 @@ import LoginModal from "./components/LoginModal";
 import WelcomeAnimation from "./components/WelcomeAnimation";
 import Profile from "./components/Profile";
 import Homework from "./components/Homework";
-import AdminLogin from "./components/AdminLogin";
-import AdminPanel from "./components/AdminPanel";
 import { students } from "./data/students";
 import { notifyExamResult as notifyExamResultTelegram, notifyLogin as notifyLoginTelegram } from "./notifyTelegram";
 import { notifyExamResult as notifyExamResultBale, notifyLogin as notifyLoginBale } from "./notifyBale";
@@ -29,8 +27,6 @@ function App() {
   const [session, setSession] = useState<Student | null>(null);
   const [view, setView] = useState<View>("welcome");
   const [activityLog, setActivityLog] = useState<ActivityLog>(loadActivityLog);
-  const [showAdminLogin, setShowAdminLogin] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const completedSeats = useMemo(() => new Set(Object.keys(activityLog).map(Number)), [activityLog]);
 
@@ -61,26 +57,11 @@ function App() {
     setSession(null);
   }
 
-  if (isAdmin) {
-    return (
-      <div className="app">
-        <header className="app__header">
-          <h1>دبستان پسرانه تشیع ۲</h1>
-          <p>پایه سوم ابتدایی — آموزگار و طراح: آیدا رضوان‌آذر</p>
-        </header>
-        <AdminPanel students={students} activityLog={activityLog} onLogout={() => setIsAdmin(false)} />
-      </div>
-    );
-  }
-
   return (
     <div className="app">
       <header className="app__header">
         <h1>دبستان پسرانه تشیع ۲</h1>
         <p>پایه سوم ابتدایی — آموزگار و طراح: آیدا رضوان‌آذر</p>
-        <button className="app__admin-link" onClick={() => setShowAdminLogin(true)}>
-          ورود مدیر
-        </button>
       </header>
 
       {!session && (
@@ -112,15 +93,6 @@ function App() {
         />
       )}
 
-      {showAdminLogin && (
-        <AdminLogin
-          onClose={() => setShowAdminLogin(false)}
-          onSuccess={() => {
-            setShowAdminLogin(false);
-            setIsAdmin(true);
-          }}
-        />
-      )}
     </div>
   );
 }
