@@ -5,12 +5,14 @@ async function sendToTelegram(text: string) {
   const { botToken, chatId } = TELEGRAM_CONFIG;
   if (!botToken || !chatId) return;
 
+  // درخواست GET ساده به‌جای POST با هدر JSON، چون هدر JSON باعث
+  // preflight می‌شود و مرورگر قبل از رسیدن درخواست به تلگرام آن را مسدود می‌کند.
+  const url =
+    `https://api.telegram.org/bot${botToken}/sendMessage` +
+    `?chat_id=${encodeURIComponent(chatId)}&text=${encodeURIComponent(text)}`;
+
   try {
-    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text }),
-    });
+    await fetch(url);
   } catch {
     // اگر شبکه در دسترس نبود، بی‌صدا نادیده گرفته می‌شود.
   }
