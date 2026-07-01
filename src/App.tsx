@@ -49,8 +49,8 @@ function App() {
   return (
     <div className="app">
       <header className="app__header">
-        <h1>دبستان ایران</h1>
-        <p>کلاس تعاملی — سامانه انجام تکلیف</p>
+        <h1>دبستان پسرانه تشیع ۲</h1>
+        <p>پایه سوم ابتدایی — آموزگار و طراح: آیدا رضوان‌آذر</p>
       </header>
 
       {!session && (

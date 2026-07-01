@@ -14,7 +14,7 @@ export default function Classroom({ students, completedSeats, onSeatClick }: Cla
         <div className="blackboard">
           <div className="blackboard__frame">
             <p className="blackboard__text">تکلیف تعاملی امروز</p>
-            <p className="blackboard__subtext">دبستان ایران — روی صندلی خود کلیک کنید</p>
+            <p className="blackboard__subtext">دبستان پسرانه تشیع ۲ — روی صندلی خود کلیک کنید</p>
           </div>
           <div className="blackboard__tray" />
         </div>
