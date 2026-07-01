@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Student } from "../types";
 import { homeworkQuestions } from "../data/homework";
 import { playCorrectSound, playWrongSound } from "../sound";
-import { speakPersian } from "../speech";
+import { hasPersianVoice, speakPersian } from "../speech";
 import { downloadCanvasAsPng, drawCertificate } from "../certificate";
 
 interface HomeworkProps {
@@ -16,11 +16,16 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [voiceAvailable, setVoiceAvailable] = useState(true);
 
   const certificateRef = useRef<HTMLCanvasElement>(null);
 
   const question = homeworkQuestions[step];
   const isLast = step === homeworkQuestions.length - 1;
+
+  useEffect(() => {
+    hasPersianVoice().then(setVoiceAvailable);
+  }, []);
 
   useEffect(() => {
     if (finished && certificateRef.current) {
@@ -109,8 +114,13 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
             type="button"
             className="homework__speak-btn"
             onClick={() => speakPersian(question.question)}
+            disabled={!voiceAvailable}
             aria-label="خواندن سؤال"
-            title="خواندن سؤال"
+            title={
+              voiceAvailable
+                ? "خواندن سؤال"
+                : "صدای فارسی روی این دستگاه نصب نیست (از تنظیمات دستگاه اضافه کنید)"
+            }
           >
             🔊
           </button>
