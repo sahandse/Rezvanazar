@@ -5,7 +5,10 @@ async function fetchWithTimeout(url: string) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   try {
-    return await fetch(url, { signal: controller.signal });
+    // no-cors چون این سرویس‌ها هدر CORS برنمی‌گردانند؛ بدون آن، مرورگر
+    // درخواستِ در واقع موفق را هم Failed to fetch حساب می‌کرد و باعث
+    // می‌شد منطق تلاش‌ِ دوباره، پیام را چند بار واقعاً ارسال کند.
+    return await fetch(url, { signal: controller.signal, mode: "no-cors" });
   } finally {
     clearTimeout(timer);
   }
