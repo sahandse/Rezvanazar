@@ -11,7 +11,13 @@ body,
 body {
   margin: 0;
   font-family: "Vazirmatn", "Tahoma", sans-serif;
-  background: linear-gradient(180deg, #cfe8f3 0%, #e8d9b5 40%, #d8b285 100%);
+  background-color: #faf3e4;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 35px,
+    rgba(169, 116, 74, 0.08) 36px
+  );
   color: #2b2118;
   direction: rtl;
 }
@@ -48,11 +54,11 @@ body {
 .classroom {
   width: 100%;
   max-width: 900px;
-  background: #f3e3c3;
-  border-radius: 20px;
-  padding: 28px 24px 32px;
-  box-shadow: 0 12px 30px rgba(60, 40, 20, 0.25);
-  border: 6px solid #a9744a;
+  background: #fffaf0;
+  border-radius: 24px;
+  padding: 32px 24px 36px;
+  box-shadow: 0 8px 24px rgba(60, 40, 20, 0.12);
+  border: 1.5px solid #eadfc4;
 }
 
 .classroom__front {
@@ -60,17 +66,15 @@ body {
   align-items: flex-end;
   justify-content: center;
   gap: 24px;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 
 .blackboard {
   background: #234d3a;
-  border: 10px solid #6b4423;
-  border-radius: 8px;
-  padding: 20px 28px;
+  border-radius: 14px;
+  padding: 22px 30px;
   min-width: 280px;
   text-align: center;
-  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.4);
   position: relative;
 }
 
@@ -89,20 +93,22 @@ body {
 }
 
 .blackboard__subtext {
-  color: #d9e8dd;
+  color: #bcdcc7;
   font-size: 0.9rem;
   margin: 0;
 }
 
 .blackboard__tray {
-  height: 8px;
-  background: #6b4423;
+  height: 5px;
+  width: 70%;
+  background: #dcd3b8;
   border-radius: 4px;
-  margin-top: 14px;
+  margin: 16px auto 0;
+  opacity: 0.6;
 }
 
 .teacher {
-  width: 90px;
+  width: 84px;
   flex-shrink: 0;
 }
 
@@ -135,23 +141,23 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  background: #fffaf0;
-  border: 2px solid #d8b285;
-  border-radius: 14px;
-  padding: 12px 8px 10px;
+  background: #fbf3e0;
+  border: 1.5px solid #eadfc4;
+  border-radius: 16px;
+  padding: 14px 8px 12px;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   font-family: inherit;
 }
 
 .seat:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(60, 40, 20, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(60, 40, 20, 0.12);
   border-color: #a9744a;
 }
 
 .seat--done {
-  border-color: #4a8c5e;
+  border-color: #a9d4b1;
   background: #eef8ef;
 }
 
@@ -206,12 +212,22 @@ body {
 
 .modal {
   background: #fffaf0;
-  border-radius: 16px;
-  padding: 28px 24px;
+  border-radius: 20px;
   width: 100%;
   max-width: 360px;
   position: relative;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 16px 32px rgba(30, 20, 10, 0.18);
+  overflow: hidden;
+}
+
+.modal__banner {
+  background: #234d3a;
+  padding: 22px 24px 18px;
+  text-align: center;
+}
+
+.modal__body {
+  padding: 22px 24px 28px;
 }
 
 .modal--shake {
@@ -232,20 +248,21 @@ body {
   border: none;
   font-size: 1.4rem;
   cursor: pointer;
-  color: #6b4a2f;
+  color: #fdf6e3;
   line-height: 1;
+  z-index: 1;
 }
 
 .modal__title {
   margin: 0 0 4px;
-  font-size: 1.25rem;
-  color: #4a2f1c;
+  font-size: 1.2rem;
+  color: #fdf6e3;
 }
 
 .modal__subtitle {
-  margin: 0 0 18px;
-  color: #6b4a2f;
-  font-size: 0.9rem;
+  margin: 0;
+  color: #bcdcc7;
+  font-size: 0.85rem;
 }
 
 .modal__form {
@@ -335,11 +352,11 @@ body {
 
 .homework__card {
   background: #fffaf0;
-  border-radius: 20px;
+  border-radius: 24px;
   padding: 28px 24px;
   width: 100%;
-  box-shadow: 0 12px 30px rgba(60, 40, 20, 0.25);
-  border: 4px solid #a9744a;
+  box-shadow: 0 8px 24px rgba(60, 40, 20, 0.12);
+  border: 1.5px solid #eadfc4;
 }
 
 .homework__card--result {
@@ -431,10 +448,10 @@ body {
   width: 100%;
   max-width: 640px;
   background: #fffaf0;
-  border-radius: 20px;
+  border-radius: 24px;
   padding: 28px 24px;
-  box-shadow: 0 12px 30px rgba(60, 40, 20, 0.25);
-  border: 4px solid #a9744a;
+  box-shadow: 0 8px 24px rgba(60, 40, 20, 0.12);
+  border: 1.5px solid #eadfc4;
   animation: profile-in 0.35s ease;
 }
 
@@ -449,25 +466,42 @@ body {
   }
 }
 
+.profile__topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
 .profile__header {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 26px;
+  padding-bottom: 20px;
+  border-bottom: 1.5px dashed #eadfc4;
 }
 
 .profile__avatar {
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: #4a8c5e;
+  background: #a9744a;
   color: #fff;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.profile__badge {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #a9744a;
+  letter-spacing: 0.03em;
+  margin-bottom: 2px;
 }
 
 .profile__name {
@@ -480,10 +514,6 @@ body {
   margin: 0;
   font-size: 0.85rem;
   color: #6b4a2f;
-}
-
-.profile__exit {
-  margin-inline-start: auto;
 }
 
 .profile__section-title {
@@ -511,16 +541,17 @@ body {
   align-items: center;
   gap: 6px;
   text-align: center;
-  background: #fff;
-  border: 2px solid #d8b285;
-  border-radius: 14px;
-  padding: 18px 12px;
+  background: #fbf3e0;
+  border: 1.5px solid #eadfc4;
+  border-radius: 16px;
+  padding: 20px 12px;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 .exam-card:hover {
   transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(60, 40, 20, 0.1);
   border-color: #4a8c5e;
 }
 
@@ -532,11 +563,12 @@ body {
 
 .exam-card--locked:hover {
   transform: none;
-  border-color: #d8b285;
+  box-shadow: none;
+  border-color: #eadfc4;
 }
 
 .exam-card--done {
-  border-color: #4a8c5e;
+  border-color: #a9d4b1;
   background: #eef8ef;
 }
 

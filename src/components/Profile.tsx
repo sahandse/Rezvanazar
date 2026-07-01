@@ -19,17 +19,20 @@ export default function Profile({ student, completed, onStartExam, onExit }: Pro
 
   return (
     <div className="profile">
+      <div className="profile__topbar">
+        <button className="btn btn--ghost profile__exit" onClick={onExit}>
+          خروج به کلاس
+        </button>
+      </div>
       <div className="profile__header">
         <div className="profile__avatar">{student.name.charAt(0)}</div>
         <div>
+          <span className="profile__badge">کارت دانش‌آموزی</span>
           <h2 className="profile__name">{student.name}</h2>
           <p className="profile__meta">
             صندلی {student.seat} — نام‌کاربری: {student.username}
           </p>
         </div>
-        <button className="btn btn--ghost profile__exit" onClick={onExit}>
-          خروج به کلاس
-        </button>
       </div>
 
       <h3 className="profile__section-title">آزمون‌های من</h3>
