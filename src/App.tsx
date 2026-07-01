@@ -7,6 +7,7 @@ import Homework from "./components/Homework";
 import AdminLogin from "./components/AdminLogin";
 import AdminPanel from "./components/AdminPanel";
 import { students } from "./data/students";
+import { notifyTelegram } from "./notifyTelegram";
 import type { ActivityLog, Student } from "./types";
 
 const STORAGE_KEY = "activity-log";
@@ -48,6 +49,7 @@ function App() {
         ...prev,
         [session.seat]: { score, total, completedAt: new Date().toISOString() },
       }));
+      notifyTelegram(session, score, total);
     }
   }
 
