@@ -385,10 +385,36 @@ body {
   transition: width 0.3s ease;
 }
 
+.homework__question-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
 .homework__question {
   font-size: 1.15rem;
   color: #2b2118;
-  margin: 0 0 18px;
+  margin: 0;
+  flex: 1;
+}
+
+.homework__speak-btn {
+  font-family: inherit;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid #eadfc4;
+  background: #fbf3e0;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.homework__speak-btn:hover {
+  border-color: #a9744a;
+  background: #f3e3c3;
 }
 
 .homework__options {
@@ -436,10 +462,24 @@ body {
   gap: 12px;
 }
 
+.homework__actions--result {
+  justify-content: center;
+  margin-top: 18px;
+}
+
 .homework__score {
   font-size: 1.1rem;
   font-weight: 700;
   color: #4a8c5e;
+}
+
+.certificate {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 16px auto 0;
+  display: block;
+  border-radius: 12px;
 }
 
 /* ------------------ Profile ------------------ */

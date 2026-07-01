@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Student } from "../types";
 import { homeworkQuestions } from "../data/homework";
+import { playCorrectSound, playWrongSound } from "../sound";
+import { speakPersian } from "../speech";
+import { downloadCanvasAsPng, drawCertificate } from "../certificate";
 
 interface HomeworkProps {
   student: Student;
@@ -14,14 +17,37 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
 
+  const certificateRef = useRef<HTMLCanvasElement>(null);
+
   const question = homeworkQuestions[step];
   const isLast = step === homeworkQuestions.length - 1;
+
+  useEffect(() => {
+    if (finished && certificateRef.current) {
+      drawCertificate(certificateRef.current, {
+        name: student.name,
+        seat: student.seat,
+        score,
+        total: homeworkQuestions.length,
+        date: new Date().toLocaleDateString("fa-IR"),
+      });
+    }
+  }, [finished, student, score]);
 
   function handleAnswer(index: number) {
     if (selected !== null) return;
     setSelected(index);
     if (index === question.correctIndex) {
       setScore((s) => s + 1);
+      playCorrectSound();
+    } else {
+      playWrongSound();
+    }
+  }
+
+  function handleDownloadCertificate() {
+    if (certificateRef.current) {
+      downloadCanvasAsPng(certificateRef.current, `کارت-افتخار-${student.name}.png`);
     }
   }
 
@@ -44,9 +70,15 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
             امتیاز شما: {score} از {homeworkQuestions.length}
           </p>
           <p>تکلیف تعاملی امروز با موفقیت انجام شد.</p>
-          <button className="btn btn--primary" onClick={onExit}>
-            بازگشت به پروفایل
-          </button>
+          <canvas ref={certificateRef} className="certificate" />
+          <div className="homework__actions homework__actions--result">
+            <button className="btn btn--ghost" onClick={handleDownloadCertificate}>
+              دانلود کارت افتخار
+            </button>
+            <button className="btn btn--primary" onClick={onExit}>
+              بازگشت به پروفایل
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -71,7 +103,18 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
           />
         </div>
 
-        <h3 className="homework__question">{question.question}</h3>
+        <div className="homework__question-row">
+          <h3 className="homework__question">{question.question}</h3>
+          <button
+            type="button"
+            className="homework__speak-btn"
+            onClick={() => speakPersian(question.question)}
+            aria-label="خواندن سؤال"
+            title="خواندن سؤال"
+          >
+            🔊
+          </button>
+        </div>
 
         <div className="homework__options">
           {question.options.map((option, index) => {
