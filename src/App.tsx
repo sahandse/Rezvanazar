@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import Classroom from "./components/Classroom";
 import LoginModal from "./components/LoginModal";
+import WelcomeAnimation from "./components/WelcomeAnimation";
+import Profile from "./components/Profile";
 import Homework from "./components/Homework";
 import { students } from "./data/students";
 import type { Student } from "./types";
 
 const STORAGE_KEY = "completed-seats";
+
+type View = "welcome" | "profile" | "exam";
 
 function loadCompleted(): Set<number> {
   try {
@@ -18,7 +22,8 @@ function loadCompleted(): Set<number> {
 
 function App() {
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const [activeStudent, setActiveStudent] = useState<Student | null>(null);
+  const [session, setSession] = useState<Student | null>(null);
+  const [view, setView] = useState<View>("welcome");
   const [completedSeats, setCompletedSeats] = useState<Set<number>>(loadCompleted);
 
   useEffect(() => {
@@ -27,17 +32,18 @@ function App() {
 
   function handleLoginSuccess(student: Student) {
     setSelectedStudent(null);
-    setActiveStudent(student);
+    setSession(student);
+    setView("welcome");
   }
 
   function handleHomeworkComplete() {
-    if (activeStudent) {
-      setCompletedSeats((prev) => new Set(prev).add(activeStudent.seat));
+    if (session) {
+      setCompletedSeats((prev) => new Set(prev).add(session.seat));
     }
   }
 
-  function handleExit() {
-    setActiveStudent(null);
+  function handleExitToClassroom() {
+    setSession(null);
   }
 
   return (
@@ -47,10 +53,25 @@ function App() {
         <p>کلاس تعاملی — سامانه انجام تکلیف</p>
       </header>
 
-      {activeStudent ? (
-        <Homework student={activeStudent} onComplete={handleHomeworkComplete} onExit={handleExit} />
-      ) : (
+      {!session && (
         <Classroom students={students} completedSeats={completedSeats} onSeatClick={setSelectedStudent} />
+      )}
+
+      {session && view === "welcome" && (
+        <WelcomeAnimation student={session} onDone={() => setView("profile")} />
+      )}
+
+      {session && view === "profile" && (
+        <Profile
+          student={session}
+          completed={completedSeats.has(session.seat)}
+          onStartExam={() => setView("exam")}
+          onExit={handleExitToClassroom}
+        />
+      )}
+
+      {session && view === "exam" && (
+        <Homework student={session} onComplete={handleHomeworkComplete} onExit={() => setView("profile")} />
       )}
 
       {selectedStudent && (

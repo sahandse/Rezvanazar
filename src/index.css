@@ -423,3 +423,248 @@ body {
   font-weight: 700;
   color: #4a8c5e;
 }
+
+/* ------------------ Profile ------------------ */
+
+.profile {
+  width: 100%;
+  max-width: 640px;
+  background: #fffaf0;
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 12px 30px rgba(60, 40, 20, 0.25);
+  border: 4px solid #a9744a;
+  animation: profile-in 0.35s ease;
+}
+
+@keyframes profile-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.profile__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #4a8c5e;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.profile__name {
+  margin: 0 0 2px;
+  font-size: 1.2rem;
+  color: #4a2f1c;
+}
+
+.profile__meta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b4a2f;
+}
+
+.profile__exit {
+  margin-inline-start: auto;
+}
+
+.profile__section-title {
+  margin: 0 0 14px;
+  font-size: 1rem;
+  color: #4a2f1c;
+}
+
+.profile__exams {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 480px) {
+  .profile__exams {
+    grid-template-columns: 1fr;
+  }
+}
+
+.exam-card {
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  background: #fff;
+  border: 2px solid #d8b285;
+  border-radius: 14px;
+  padding: 18px 12px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.exam-card:hover {
+  transform: translateY(-3px);
+  border-color: #4a8c5e;
+}
+
+.exam-card--locked {
+  cursor: not-allowed;
+  background: #f3ede0;
+  color: #8a7a5f;
+}
+
+.exam-card--locked:hover {
+  transform: none;
+  border-color: #d8b285;
+}
+
+.exam-card--done {
+  border-color: #4a8c5e;
+  background: #eef8ef;
+}
+
+.exam-card--shake {
+  animation: shake 0.4s;
+}
+
+.exam-card__icon {
+  font-size: 1.6rem;
+}
+
+.exam-card__title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.exam-card__desc {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* ------------------ Welcome animation ------------------ */
+
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(35, 77, 58, 0.92);
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.welcome--leaving {
+  opacity: 0;
+}
+
+.welcome__card {
+  text-align: center;
+  color: #fff;
+}
+
+.welcome__card h2 {
+  margin: 0 0 8px;
+  font-size: 1.8rem;
+}
+
+.welcome__card p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.welcome__emoji {
+  font-size: 3rem;
+  margin: 0 0 8px;
+}
+
+.welcome--bounce .welcome__card {
+  animation: welcome-bounce 0.7s ease;
+}
+
+@keyframes welcome-bounce {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.welcome--slide .welcome__card {
+  animation: welcome-slide 0.6s ease;
+}
+
+@keyframes welcome-slide {
+  from {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.welcome--zoom .welcome__card {
+  animation: welcome-zoom 0.6s ease;
+}
+
+@keyframes welcome-zoom {
+  from {
+    transform: scale(1.6) rotate(4deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.welcome--confetti .welcome__card {
+  animation: welcome-bounce 0.7s ease;
+}
+
+.welcome__confetti {
+  position: absolute;
+  top: -20px;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation-name: confetti-fall;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+@keyframes confetti-fall {
+  from {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0.8;
+  }
+}

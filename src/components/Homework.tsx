@@ -45,7 +45,7 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
           </p>
           <p>تکلیف تعاملی امروز با موفقیت انجام شد.</p>
           <button className="btn btn--primary" onClick={onExit}>
-            بازگشت به کلاس
+            بازگشت به پروفایل
           </button>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
 
         <div className="homework__actions">
           <button className="btn btn--ghost" onClick={onExit}>
-            خروج
+            بازگشت به پروفایل
           </button>
           <button className="btn btn--primary" onClick={handleNext} disabled={selected === null}>
             {isLast ? "پایان تکلیف" : "سوال بعدی"}
