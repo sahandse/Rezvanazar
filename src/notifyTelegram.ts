@@ -1,4 +1,5 @@
 import { TELEGRAM_CONFIG } from "./data/telegram";
+import { buildExamResultMessage, buildLoginMessage } from "./notifyMessages";
 import { sendWithRetry } from "./sendWithRetry";
 import type { Student } from "./types";
 
@@ -10,28 +11,15 @@ function sendToTelegram(text: string) {
   // preflight می‌شود و مرورگر قبل از رسیدن درخواست به تلگرام آن را مسدود می‌کند.
   const url =
     `https://api.telegram.org/bot${botToken}/sendMessage` +
-    `?chat_id=${encodeURIComponent(chatId)}&text=${encodeURIComponent(text)}`;
+    `?chat_id=${encodeURIComponent(chatId)}&parse_mode=HTML&text=${encodeURIComponent(text)}`;
 
   return sendWithRetry(url);
 }
 
 export function notifyLogin(student: Student) {
-  const text = [
-    "🔓 ورود دانش‌آموز",
-    `👤 ${student.name} (صندلی ${student.seat})`,
-    `🔑 نام‌کاربری: ${student.username}`,
-    `🕒 ${new Date().toLocaleString("fa-IR")}`,
-  ].join("\n");
-  return sendToTelegram(text);
+  return sendToTelegram(buildLoginMessage(student));
 }
 
 export function notifyExamResult(student: Student, score: number, total: number) {
-  const text = [
-    "📋 تکلیف تعاملی انجام شد",
-    `👤 ${student.name} (صندلی ${student.seat})`,
-    `🔑 نام‌کاربری: ${student.username}`,
-    `✅ نمره: ${score} از ${total}`,
-    `🕒 ${new Date().toLocaleString("fa-IR")}`,
-  ].join("\n");
-  return sendToTelegram(text);
+  return sendToTelegram(buildExamResultMessage(student, score, total));
 }
