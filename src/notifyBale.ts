@@ -1,15 +1,14 @@
-import { TELEGRAM_CONFIG } from "./data/telegram";
+import { BALE_CONFIG } from "./data/bale";
 import { sendWithRetry } from "./sendWithRetry";
 import type { Student } from "./types";
 
-function sendToTelegram(text: string) {
-  const { botToken, chatId } = TELEGRAM_CONFIG;
+function sendToBale(text: string) {
+  const { botToken, chatId } = BALE_CONFIG;
   if (!botToken || !chatId) return;
 
-  // درخواست GET ساده به‌جای POST با هدر JSON، چون هدر JSON باعث
-  // preflight می‌شود و مرورگر قبل از رسیدن درخواست به تلگرام آن را مسدود می‌کند.
+  // بله (Bale) از API‌ای همسو با تلگرام استفاده می‌کند: https://tapi.bale.ai/bot<token>/METHOD
   const url =
-    `https://api.telegram.org/bot${botToken}/sendMessage` +
+    `https://tapi.bale.ai/bot${botToken}/sendMessage` +
     `?chat_id=${encodeURIComponent(chatId)}&text=${encodeURIComponent(text)}`;
 
   return sendWithRetry(url);
@@ -22,7 +21,7 @@ export function notifyLogin(student: Student) {
     `🔑 نام‌کاربری: ${student.username}`,
     `🕒 ${new Date().toLocaleString("fa-IR")}`,
   ].join("\n");
-  return sendToTelegram(text);
+  return sendToBale(text);
 }
 
 export function notifyExamResult(student: Student, score: number, total: number) {
@@ -33,5 +32,5 @@ export function notifyExamResult(student: Student, score: number, total: number)
     `✅ نمره: ${score} از ${total}`,
     `🕒 ${new Date().toLocaleString("fa-IR")}`,
   ].join("\n");
-  return sendToTelegram(text);
+  return sendToBale(text);
 }

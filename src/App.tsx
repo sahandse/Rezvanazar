@@ -7,7 +7,8 @@ import Homework from "./components/Homework";
 import AdminLogin from "./components/AdminLogin";
 import AdminPanel from "./components/AdminPanel";
 import { students } from "./data/students";
-import { notifyExamResult, notifyLogin } from "./notifyTelegram";
+import { notifyExamResult as notifyExamResultTelegram, notifyLogin as notifyLoginTelegram } from "./notifyTelegram";
+import { notifyExamResult as notifyExamResultBale, notifyLogin as notifyLoginBale } from "./notifyBale";
 import type { ActivityLog, Student } from "./types";
 
 const STORAGE_KEY = "activity-log";
@@ -41,7 +42,8 @@ function App() {
     setSelectedStudent(null);
     setSession(student);
     setView("welcome");
-    notifyLogin(student);
+    notifyLoginTelegram(student);
+    notifyLoginBale(student);
   }
 
   function handleHomeworkComplete(score: number, total: number) {
@@ -50,7 +52,8 @@ function App() {
         ...prev,
         [session.seat]: { score, total, completedAt: new Date().toISOString() },
       }));
-      notifyExamResult(session, score, total);
+      notifyExamResultTelegram(session, score, total);
+      notifyExamResultBale(session, score, total);
     }
   }
 
