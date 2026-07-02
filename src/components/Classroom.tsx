@@ -1,13 +1,15 @@
+import type { Team } from "../data/teams";
 import type { Student } from "../types";
 import Seat from "./Seat";
 
 interface ClassroomProps {
   students: Student[];
   completedSeats: Set<number>;
+  teamForSeat: (seat: number) => Team | undefined;
   onSeatClick: (student: Student) => void;
 }
 
-export default function Classroom({ students, completedSeats, onSeatClick }: ClassroomProps) {
+export default function Classroom({ students, completedSeats, teamForSeat, onSeatClick }: ClassroomProps) {
   return (
     <div className="classroom">
       <div className="classroom__front">
@@ -76,6 +78,7 @@ export default function Classroom({ students, completedSeats, onSeatClick }: Cla
             key={student.id}
             student={student}
             completed={completedSeats.has(student.seat)}
+            team={teamForSeat(student.seat)}
             onClick={onSeatClick}
           />
         ))}

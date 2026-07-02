@@ -1,15 +1,17 @@
 import { useState } from "react";
+import type { Team } from "../data/teams";
 import type { Student } from "../types";
 import { exams } from "../data/exams";
 
 interface ProfileProps {
   student: Student;
   completed: boolean;
+  team?: Team;
   onStartExam: () => void;
   onExit: () => void;
 }
 
-export default function Profile({ student, completed, onStartExam, onExit }: ProfileProps) {
+export default function Profile({ student, completed, team, onStartExam, onExit }: ProfileProps) {
   const [shakeId, setShakeId] = useState<number | null>(null);
 
   function handleLockedClick(id: number) {
@@ -25,13 +27,23 @@ export default function Profile({ student, completed, onStartExam, onExit }: Pro
         </button>
       </div>
       <div className="profile__header">
-        <div className="profile__avatar">{student.name.charAt(0)}</div>
+        <div
+          className="profile__avatar"
+          style={team ? { background: team.primary, color: team.secondary } : undefined}
+        >
+          {student.name.charAt(0)}
+        </div>
         <div>
           <span className="profile__badge">کارت دانش‌آموزی</span>
           <h2 className="profile__name">{student.name}</h2>
           <p className="profile__meta">
             صندلی {student.seat} — نام‌کاربری: {student.username}
           </p>
+          {team && (
+            <p className="profile__team" style={{ color: team.primary }}>
+              ⚽ {team.name} (شماره {team.number})
+            </p>
+          )}
         </div>
       </div>
 

@@ -190,6 +190,21 @@ body {
   height: 56px;
 }
 
+.seat__jersey {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
 .seat__name {
   font-size: 0.85rem;
   font-weight: 500;
@@ -560,6 +575,12 @@ body {
   color: #6b4a2f;
 }
 
+.profile__team {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
 .profile__section-title {
   margin: 0 0 14px;
   font-size: 1rem;
@@ -744,5 +765,83 @@ body {
     transform: translateY(110vh) rotate(360deg);
     opacity: 0.8;
   }
+}
+
+/* ------------------ Team picker ------------------ */
+
+.team-picker {
+  width: 100%;
+  max-width: 560px;
+  background: #fffaf0;
+  border-radius: 24px;
+  padding: 28px 24px;
+  box-shadow: 0 8px 24px rgba(60, 40, 20, 0.12);
+  border: 1.5px solid #eadfc4;
+  text-align: center;
+}
+
+.team-picker__title {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+  color: #4a2f1c;
+}
+
+.team-picker__subtitle {
+  margin: 0 0 22px;
+  font-size: 0.9rem;
+  color: #6b4a2f;
+}
+
+.team-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 480px) {
+  .team-picker__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.team-card {
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #fbf3e0;
+  border: 2px solid #eadfc4;
+  border-radius: 16px;
+  padding: 18px 12px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(60, 40, 20, 0.12);
+}
+
+.team-card__jersey {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.team-card__name {
+  font-weight: 700;
+  color: #4a2f1c;
+}
+
+.team-card__player {
+  font-size: 0.8rem;
+  color: #6b4a2f;
 }
 
