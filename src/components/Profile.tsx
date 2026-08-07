@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Team } from "../data/teams";
 import type { Student } from "../types";
 import { exams } from "../data/exams";
+import ActivityModal from "./ActivityModal";
 
 interface ProfileProps {
   student: Student;
@@ -11,12 +12,33 @@ interface ProfileProps {
   onExit: () => void;
 }
 
+const ACTIVITY_STORAGE_KEY = "activity-completion";
+
+function loadActivityCompletion(): Record<number, boolean> {
+  try {
+    const raw = localStorage.getItem(ACTIVITY_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
 export default function Profile({ student, completed, team, onStartExam, onExit }: ProfileProps) {
   const [shakeId, setShakeId] = useState<number | null>(null);
+  const [activityOpen, setActivityOpen] = useState(false);
+  const [activityCompleted, setActivityCompleted] = useState<Record<number, boolean>>(loadActivityCompletion);
+
+  useEffect(() => {
+    localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(activityCompleted));
+  }, [activityCompleted]);
 
   function handleLockedClick(id: number) {
     setShakeId(id);
     setTimeout(() => setShakeId(null), 400);
+  }
+
+  function handleActivityComplete() {
+    setActivityCompleted((prev) => ({ ...prev, [student.seat]: true }));
   }
 
   return (
@@ -51,20 +73,19 @@ export default function Profile({ student, completed, team, onStartExam, onExit 
       <div className="profile__exams">
         {exams.map((exam) => {
           const isDone = exam.id === 1 && completed;
+          const isActivityDone = exam.activityType === "activity" && activityCompleted[student.seat];
           if (exam.activityType === "activity") {
             return (
-              <a
+              <button
                 key={exam.id}
-                className="exam-card exam-card--activity"
-                style={{ borderColor: team?.primary, textDecoration: "none", color: "inherit" }}
-                href="https://view.genially.com/6a59fe5f05bae8182ff49b9d"
-                target="_blank"
-                rel="noreferrer"
+                className={`exam-card exam-card--activity${isActivityDone ? " exam-card--done" : ""}`}
+                style={{ borderColor: team?.primary }}
+                onClick={() => setActivityOpen(true)}
               >
-                <span className="exam-card__icon">🧪</span>
+                <span className="exam-card__icon">{isActivityDone ? "✅" : "🧪"}</span>
                 <span className="exam-card__title">{exam.title}</span>
-                <span className="exam-card__desc">{exam.description}</span>
-              </a>
+                <span className="exam-card__desc">{isActivityDone ? "انجام شد" : exam.description}</span>
+              </button>
             );
           }
           return (
@@ -85,6 +106,15 @@ export default function Profile({ student, completed, team, onStartExam, onExit 
           );
         })}
       </div>
+
+      <ActivityModal
+        isOpen={activityOpen}
+        onClose={() => setActivityOpen(false)}
+        title="فعالیت سوم: جامد، مایع، گاز"
+        url="https://view.genially.com/6a59fe5f05bae8182ff49b9d"
+        onComplete={handleActivityComplete}
+      />
     </div>
   );
 }
+
