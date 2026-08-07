@@ -4,6 +4,7 @@ interface CertificateParams {
   score: number;
   total: number;
   date: string;
+  title?: string;
 }
 
 const WIDTH = 640;
@@ -15,7 +16,7 @@ function starRating(percentage: number) {
   return 1;
 }
 
-export async function drawCertificate(canvas: HTMLCanvasElement, { name, seat, score, total, date }: CertificateParams) {
+export async function drawCertificate(canvas: HTMLCanvasElement, { name, seat, score, total, date, title = "کارت افتخار" }: CertificateParams) {
   if ("fonts" in document) {
     await document.fonts.ready;
   }
@@ -46,7 +47,7 @@ export async function drawCertificate(canvas: HTMLCanvasElement, { name, seat, s
 
   ctx.fillStyle = "#a9744a";
   ctx.font = "bold 36px Vazirmatn";
-  ctx.fillText("کارت افتخار", WIDTH / 2, 120);
+  ctx.fillText(title, WIDTH / 2, 120);
 
   ctx.fillStyle = "#4a2f1c";
   ctx.font = "bold 30px Vazirmatn";

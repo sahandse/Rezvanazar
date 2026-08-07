@@ -634,6 +634,18 @@ body {
   background: #eef8ef;
 }
 
+.exam-card--activity {
+  cursor: pointer;
+  background: #fdf6e3;
+  border-style: dashed;
+}
+
+.exam-card--activity:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(60, 40, 20, 0.1);
+  border-style: solid;
+}
+
 .exam-card--shake {
   animation: shake 0.4s;
 }

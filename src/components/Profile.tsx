@@ -8,10 +8,11 @@ interface ProfileProps {
   completed: boolean;
   team?: Team;
   onStartExam: () => void;
+  onStartActivity: () => void;
   onExit: () => void;
 }
 
-export default function Profile({ student, completed, team, onStartExam, onExit }: ProfileProps) {
+export default function Profile({ student, completed, team, onStartExam, onStartActivity, onExit }: ProfileProps) {
   const [shakeId, setShakeId] = useState<number | null>(null);
 
   function handleLockedClick(id: number) {
@@ -51,6 +52,20 @@ export default function Profile({ student, completed, team, onStartExam, onExit 
       <div className="profile__exams">
         {exams.map((exam) => {
           const isDone = exam.id === 1 && completed;
+          if (exam.activityType === "activity") {
+            return (
+              <button
+                key={exam.id}
+                className="exam-card exam-card--activity"
+                style={{ borderColor: team?.primary }}
+                onClick={onStartActivity}
+              >
+                <span className="exam-card__icon">🧪</span>
+                <span className="exam-card__title">{exam.title}</span>
+                <span className="exam-card__desc">{exam.description}</span>
+              </button>
+            );
+          }
           return (
             <button
               key={exam.id}

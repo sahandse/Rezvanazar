@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import type { Student } from "../types";
 import { homeworkQuestions } from "../data/homework";
+import { statesOfMatterQuestions } from "../data/activities";
 import { playCorrectSound, playWrongSound } from "../sound";
 import { hasPersianVoice, speakPersian } from "../speech";
 import { downloadCanvasAsPng, drawCertificate } from "../certificate";
 
 interface HomeworkProps {
   student: Student;
-  onComplete: (score: number, total: number) => void;
+  onComplete: (score: number, total: number, examId: number) => void;
   onExit: () => void;
+  activityMode?: boolean;
+  examId?: number;
 }
 
-export default function Homework({ student, onComplete, onExit }: HomeworkProps) {
+export default function Homework({ student, onComplete, onExit, activityMode = false, examId = 1 }: HomeworkProps) {
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -20,8 +23,10 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
 
   const certificateRef = useRef<HTMLCanvasElement>(null);
 
-  const question = homeworkQuestions[step];
-  const isLast = step === homeworkQuestions.length - 1;
+  const questions = activityMode ? statesOfMatterQuestions : homeworkQuestions;
+  const question = questions[step];
+  const isLast = step === questions.length - 1;
+  const total = questions.length;
 
   useEffect(() => {
     hasPersianVoice().then(setVoiceAvailable);
@@ -29,15 +34,17 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
 
   useEffect(() => {
     if (finished && certificateRef.current) {
+      const title = activityMode ? "فعالیت جامد مایع گاز" : "تکلیف تعاملی";
       drawCertificate(certificateRef.current, {
         name: student.name,
         seat: student.seat,
         score,
-        total: homeworkQuestions.length,
+        total,
         date: new Date().toLocaleDateString("fa-IR"),
+        title,
       });
     }
-  }, [finished, student, score]);
+  }, [finished, student, score, total, activityMode]);
 
   function handleAnswer(index: number) {
     if (selected !== null) return;
@@ -52,14 +59,15 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
 
   function handleDownloadCertificate() {
     if (certificateRef.current) {
-      downloadCanvasAsPng(certificateRef.current, `کارت-افتخار-${student.name}.png`);
+      const filename = activityMode ? `فعالیت-جامد-مایع-گاز-${student.name}.png` : `کارت-افتخار-${student.name}.png`;
+      downloadCanvasAsPng(certificateRef.current, filename);
     }
   }
 
   function handleNext() {
     if (isLast) {
       setFinished(true);
-      onComplete(score, homeworkQuestions.length);
+      onComplete(score, total, examId);
     } else {
       setStep((s) => s + 1);
       setSelected(null);
@@ -72,9 +80,9 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
         <div className="homework__card homework__card--result">
           <h2>آفرین، {student.name}! 🎉</h2>
           <p className="homework__score">
-            امتیاز شما: {score} از {homeworkQuestions.length}
+            امتیاز شما: {score} از {total}
           </p>
-          <p>تکلیف تعاملی امروز با موفقیت انجام شد.</p>
+          <p>{activityMode ? "فعالیت حالت‌های ماده با موفقیت انجام شد." : "تکلیف تعاملی امروز با موفقیت انجام شد."}</p>
           <canvas ref={certificateRef} className="certificate" />
           <div className="homework__actions homework__actions--result">
             <button className="btn btn--ghost" onClick={handleDownloadCertificate}>
@@ -97,14 +105,14 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
             {student.name} — صندلی {student.seat}
           </span>
           <span>
-            سوال {step + 1} از {homeworkQuestions.length}
+            سوال {step + 1} از {total}
           </span>
         </div>
 
         <div className="homework__progress">
           <div
             className="homework__progress-bar"
-            style={{ width: `${((step + (selected !== null ? 1 : 0)) / homeworkQuestions.length) * 100}%` }}
+            style={{ width: `${((step + (selected !== null ? 1 : 0)) / total) * 100}%` }}
           />
         </div>
 
