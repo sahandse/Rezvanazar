@@ -8,11 +8,10 @@ interface ProfileProps {
   completed: boolean;
   team?: Team;
   onStartExam: () => void;
-  onStartActivity: () => void;
   onExit: () => void;
 }
 
-export default function Profile({ student, completed, team, onStartExam, onStartActivity, onExit }: ProfileProps) {
+export default function Profile({ student, completed, team, onStartExam, onExit }: ProfileProps) {
   const [shakeId, setShakeId] = useState<number | null>(null);
 
   function handleLockedClick(id: number) {
@@ -48,22 +47,24 @@ export default function Profile({ student, completed, team, onStartExam, onStart
         </div>
       </div>
 
-      <h3 className="profile__section-title">آزمون‌های من</h3>
+      <h3 className="profile__section-title">فعالیت‌های من</h3>
       <div className="profile__exams">
         {exams.map((exam) => {
           const isDone = exam.id === 1 && completed;
           if (exam.activityType === "activity") {
             return (
-              <button
+              <a
                 key={exam.id}
                 className="exam-card exam-card--activity"
-                style={{ borderColor: team?.primary }}
-                onClick={onStartActivity}
+                style={{ borderColor: team?.primary, textDecoration: "none", color: "inherit" }}
+                href="https://view.genially.com/6a59fe5f05bae8182ff49b9d"
+                target="_blank"
+                rel="noreferrer"
               >
                 <span className="exam-card__icon">🧪</span>
                 <span className="exam-card__title">{exam.title}</span>
                 <span className="exam-card__desc">{exam.description}</span>
-              </button>
+              </a>
             );
           }
           return (

@@ -14,7 +14,7 @@ import type { ActivityLog, Student } from "./types";
 const STORAGE_KEY = "activity-log";
 const TEAM_STORAGE_KEY = "team-choices";
 
-type View = "team-select" | "welcome" | "profile" | "exam" | "activity";
+type View = "team-select" | "welcome" | "profile" | "exam";
 type TeamChoices = Record<number, string>;
 
 function loadActivityLog(): ActivityLog {
@@ -90,16 +90,6 @@ function App() {
     }
   }
 
-  function handleActivityComplete(score: number, total: number) {
-    if (session) {
-      const activityKey = `activity-${session.seat}`;
-      const existing = JSON.parse(localStorage.getItem(activityKey) || "null");
-      localStorage.setItem(activityKey, JSON.stringify({ score, total, completedAt: new Date().toISOString(), existing }));
-      notifyExamResultTelegram(session, score, total);
-      notifyExamResultBale(session, score, total);
-    }
-  }
-
   function handleExitToClassroom() {
     setSession(null);
   }
@@ -139,23 +129,12 @@ function App() {
           completed={completedSeats.has(session.seat)}
           team={appTheme}
           onStartExam={() => setView("exam")}
-          onStartActivity={() => setView("activity")}
           onExit={handleExitToClassroom}
         />
       )}
 
       {session && view === "exam" && (
         <Homework student={session} onComplete={handleHomeworkComplete} onExit={() => setView("profile")} />
-      )}
-
-      {session && view === "activity" && (
-        <Homework
-          student={session}
-          activityMode
-          examId={7}
-          onComplete={handleActivityComplete}
-          onExit={() => setView("profile")}
-        />
       )}
 
       {selectedStudent && (
