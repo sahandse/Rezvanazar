@@ -12,7 +12,11 @@ export default function Seat({ student, completed, team, onClick }: SeatProps) {
   return (
     <button
       className={`seat${completed ? " seat--done" : ""}`}
-      style={!completed && team ? { borderColor: team.primary } : undefined}
+      style={
+        !completed && team
+          ? { borderColor: team.primary, background: `${team.primary}15` }
+          : undefined
+      }
       onClick={() => onClick(student)}
       aria-label={`صندلی ${student.seat} - ${student.name}`}
     >

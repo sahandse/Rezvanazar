@@ -57,6 +57,7 @@ export default function Profile({ student, completed, team, onStartExam, onExit 
               className={`exam-card${exam.locked ? " exam-card--locked" : ""}${
                 shakeId === exam.id ? " exam-card--shake" : ""
               }${isDone ? " exam-card--done" : ""}`}
+              style={!exam.locked && !isDone ? { borderColor: team?.primary } : undefined}
               onClick={() => (exam.locked ? handleLockedClick(exam.id) : onStartExam())}
             >
               <span className="exam-card__icon">{exam.locked ? "🔒" : isDone ? "✅" : "📝"}</span>

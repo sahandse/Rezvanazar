@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Student } from "../types";
+import type { Team } from "../data/teams";
 
 interface WelcomeAnimationProps {
   student: Student;
+  team?: Team;
   onDone: () => void;
 }
 
@@ -11,7 +13,7 @@ type Variant = (typeof VARIANTS)[number];
 
 const CONFETTI_COLORS = ["#4a8c5e", "#a9744a", "#234d3a", "#7a3b46", "#e0b34c"];
 
-export default function WelcomeAnimation({ student, onDone }: WelcomeAnimationProps) {
+export default function WelcomeAnimation({ student, team, onDone }: WelcomeAnimationProps) {
   const [leaving, setLeaving] = useState(false);
   const variant = useMemo<Variant>(() => VARIANTS[Math.floor(Math.random() * VARIANTS.length)], []);
   const confetti = useMemo(
@@ -35,7 +37,10 @@ export default function WelcomeAnimation({ student, onDone }: WelcomeAnimationPr
   }, [onDone]);
 
   return (
-    <div className={`welcome welcome--${variant}${leaving ? " welcome--leaving" : ""}`}>
+    <div
+      className={`welcome welcome--${variant}${leaving ? " welcome--leaving" : ""}`}
+      style={team ? { background: `${team.primary}eb` } : undefined}
+    >
       {variant === "confetti" &&
         confetti.map((c, i) => (
           <span

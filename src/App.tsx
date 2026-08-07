@@ -57,6 +57,13 @@ function App() {
     return teams.find((team) => team.id === teamId);
   }
 
+  function currentTeam() {
+    if (!session) return undefined;
+    return teamForSeat(session.seat);
+  }
+
+  const appTheme = currentTeam();
+
   function handleLoginSuccess(student: Student) {
     setSelectedStudent(null);
     setSession(student);
@@ -87,8 +94,15 @@ function App() {
     setSession(null);
   }
 
+  const appThemeStyle = appTheme
+    ? ({
+        "--team-primary": appTheme.primary,
+        "--team-secondary": appTheme.secondary,
+      } as React.CSSProperties)
+    : undefined;
+
   return (
-    <div className="app">
+    <div className="app" style={appThemeStyle}>
       <header className="app__header">
         <h1>دبستان پسرانه تشیع ۲</h1>
         <p>پایه سوم ابتدایی — آموزگار و طراح: آیدا رضوان‌آذر</p>
@@ -106,7 +120,7 @@ function App() {
       {session && view === "team-select" && <TeamPicker student={session} onChoose={handleTeamChosen} />}
 
       {session && view === "welcome" && (
-        <WelcomeAnimation student={session} onDone={() => setView("profile")} />
+        <WelcomeAnimation student={session} team={appTheme} onDone={() => setView("profile")} />
       )}
 
       {session && view === "profile" && (
