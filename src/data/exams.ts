@@ -16,19 +16,31 @@ export const exams: Exam[] = [
   {
     id: 2,
     title: "آزمون ریاضی",
-    description: "به‌زودی فعال می‌شود",
-    locked: true,
+    description: "آزمون ریاضی پایه سوم",
+    locked: false,
   },
   {
     id: 3,
     title: "آزمون علوم",
-    description: "به‌زودی فعال می‌شود",
-    locked: true,
+    description: "آزمون علوم پایه سوم",
+    locked: false,
   },
   {
     id: 4,
     title: "آزمون ادبیات فارسی",
-    description: "به‌زودی فعال می‌شود",
-    locked: true,
+    description: "آزمون ادبیات فارسی پایه سوم",
+    locked: false,
+  },
+  {
+    id: 5,
+    title: "آزمون تاریخ",
+    description: "آزمون تاریخ پایه سوم",
+    locked: false,
+  },
+  {
+    id: 6,
+    title: "آزمون جغرافیا",
+    description: "آزمون جغرافیا پایه سوم",
+    locked: false,
   },
 ];

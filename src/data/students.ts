@@ -14,4 +14,12 @@ export const students: Student[] = [
   { id: 10, seat: 10, name: "نگار قاسمی", username: "negar.gh", password: "1235" },
   { id: 11, seat: 11, name: "یاسین مرادی", username: "yasin.m", password: "2346" },
   { id: 12, seat: 12, name: "الناز رحیمی", username: "elnaz.r", password: "3457" },
+  { id: 13, seat: 13, name: "سینا کریمی", username: "sina.k", password: "4568" },
+  { id: 14, seat: 14, name: "مهسا علی‌پور", username: "mahsa.a", password: "5679" },
+  { id: 15, seat: 15, name: "آرش حبیبی", username: "arash.h", password: "6780" },
+  { id: 16, seat: 16, name: "لیلا موسوی", username: "laila.m", password: "7891" },
+  { id: 17, seat: 17, name: "امیرحسین نوری", username: "amir.h", password: "8902" },
+  { id: 18, seat: 18, name: "زهرا سلیمانی", username: "zahra.s", password: "9013" },
+  { id: 19, seat: 19, name: "رضا محمدی", username: "reza.m", password: "0124" },
+  { id: 20, seat: 20, name: "سارا رضایی", username: "sara.r", password: "1236" },
 ];

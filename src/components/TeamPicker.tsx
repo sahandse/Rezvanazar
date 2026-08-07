@@ -19,11 +19,18 @@ export default function TeamPicker({ student, onChoose }: TeamPickerProps) {
             style={{ borderColor: team.primary }}
             onClick={() => onChoose(team.id)}
           >
+            <img
+              className="team-card__image"
+              src={team.image}
+              alt={team.player}
+              loading="lazy"
+            />
             <span className="team-card__jersey" style={{ background: team.primary, color: team.secondary }}>
               {team.number}
             </span>
             <span className="team-card__name">{team.name}</span>
             <span className="team-card__player">{team.player}</span>
+            <span className="team-card__bio">{team.bio}</span>
           </button>
         ))}
       </div>
