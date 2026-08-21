@@ -24,7 +24,7 @@ export default function ActivityModal({ isOpen, onClose, title, url, onComplete 
     };
   }, [isOpen]);
 
-  function handleClose() {
+  function handleFinish() {
     onComplete();
     onClose();
   }
@@ -32,11 +32,11 @@ export default function ActivityModal({ isOpen, onClose, title, url, onComplete 
   if (!isOpen) return null;
 
   return (
-    <div className="activity-modal-overlay" onClick={handleClose}>
+    <div className="activity-modal-overlay" onClick={onClose}>
       <div className="activity-modal" onClick={(e) => e.stopPropagation()}>
         <div className="activity-modal__header">
           <h2 className="activity-modal__title">{title}</h2>
-          <button className="activity-modal__close" onClick={handleClose} aria-label="بستن">
+          <button className="activity-modal__close" onClick={handleFinish} aria-label="پایان فعالیت">
             ×
           </button>
         </div>

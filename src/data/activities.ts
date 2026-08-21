@@ -27,7 +27,7 @@ export const statesOfMatterQuestions: Question[] = [
   {
     id: 4,
     question: "یخ تبدیل به آب می‌شود. این تغییر حالت ماده به چه نامی می‌نامند؟",
-    options: ["انجماد", "بخارشدن", "گلاسیدن", "جوشیدن"],
+    options: ["انجماد", "ذوب شدن", "بخارشدن", "جوشیدن"],
     correctIndex: 1,
   },
   {
