@@ -12,12 +12,11 @@ body {
   margin: 0;
   font-family: "Vazirmatn", "Tahoma", sans-serif;
   background-color: #faf3e4;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 35px,
-    rgba(169, 116, 74, 0.08) 36px
-  );
+  background-image: linear-gradient(rgba(192, 57, 43, 0.32), rgba(192, 57, 43, 0.32)),
+    repeating-linear-gradient(to bottom, transparent 0, transparent 35px, rgba(169, 116, 74, 0.08) 36px);
+  background-repeat: no-repeat, repeat;
+  background-size: 2px 100%, auto;
+  background-position: right 40px top 0, 0 0;
   color: #2b2118;
   direction: rtl;
 }
@@ -33,22 +32,56 @@ body {
   --team-secondary: #1a1a1a;
 }
 
+.app__header {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  text-align: center;
+  background: linear-gradient(180deg, #86583263, transparent), linear-gradient(180deg, #7a4f2c, #573a20);
+  border-radius: 16px;
+  padding: 18px 30px 20px;
+  margin-bottom: 28px;
+  box-shadow: 0 10px 22px rgba(60, 40, 20, 0.25), inset 0 2px 0 rgba(255, 255, 255, 0.1);
+}
+
+.app__header::before,
+.app__header::after {
+  content: "";
+  position: absolute;
+  top: 11px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f3d9a4, #a9744a 75%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.app__header::before {
+  right: 14px;
+}
+
+.app__header::after {
+  left: 14px;
+}
+
 .app__header h1 {
   margin: 0 0 4px;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--team-primary);
+  color: #fdf6e3;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
 }
 
 .app__header p {
   margin: 0;
-  color: #6b4a2f;
+  color: #e7cea5;
   font-weight: 500;
 }
 
 /* ------------------ Classroom ------------------ */
 
 .classroom {
+  position: relative;
   width: 100%;
   max-width: 900px;
   background: #fffaf0;
@@ -56,6 +89,42 @@ body {
   padding: 32px 24px 36px;
   box-shadow: 0 8px 24px rgba(60, 40, 20, 0.12);
   border: 1.5px solid var(--team-primary);
+}
+
+/* چسب‌نواری روی گوشه‌ی کارت‌های اصلی، مثل اعلانات چسب‌خورده به تابلوی کلاس */
+.classroom::before,
+.classroom::after,
+.profile::before,
+.profile::after,
+.homework__card::before,
+.homework__card::after,
+.team-picker::before,
+.team-picker::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  width: 54px;
+  height: 22px;
+  background: rgba(255, 226, 140, 0.55);
+  border: 1px solid rgba(169, 116, 74, 0.35);
+  box-shadow: 0 2px 4px rgba(60, 40, 20, 0.15);
+  pointer-events: none;
+}
+
+.classroom::before,
+.profile::before,
+.homework__card::before,
+.team-picker::before {
+  right: 36px;
+  transform: rotate(-6deg);
+}
+
+.classroom::after,
+.profile::after,
+.homework__card::after,
+.team-picker::after {
+  left: 36px;
+  transform: rotate(5deg);
 }
 
 .classroom__front {
@@ -67,12 +136,15 @@ body {
 }
 
 .blackboard {
-  background: #234d3a;
+  background: radial-gradient(circle at 22% 28%, rgba(255, 255, 255, 0.05), transparent 40%),
+    radial-gradient(circle at 78% 68%, rgba(255, 255, 255, 0.04), transparent 35%), #234d3a;
   border-radius: 14px;
   padding: 22px 30px;
   min-width: 280px;
   text-align: center;
   position: relative;
+  border: 6px solid #7a4f2c;
+  box-shadow: 0 6px 14px rgba(40, 25, 10, 0.3);
 }
 
 .blackboard__frame {
@@ -87,6 +159,8 @@ body {
   font-weight: 700;
   margin: 0;
   font-family: "Vazirmatn", sans-serif;
+  letter-spacing: 0.01em;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.35), 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .blackboard__subtext {
@@ -317,8 +391,8 @@ body {
 .btn {
   font-family: inherit;
   border: none;
-  border-radius: 10px;
-  padding: 10px 18px;
+  border-radius: 999px;
+  padding: 10px 20px;
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
@@ -332,6 +406,7 @@ body {
 .btn--primary {
   background: var(--team-primary);
   color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .btn--primary:disabled {
@@ -363,6 +438,7 @@ body {
 }
 
 .homework__card {
+  position: relative;
   background: #fffaf0;
   border-radius: 24px;
   padding: 28px 24px;
@@ -501,6 +577,7 @@ body {
 /* ------------------ Profile ------------------ */
 
 .profile {
+  position: relative;
   width: 100%;
   max-width: 640px;
   background: #fffaf0;
@@ -632,6 +709,18 @@ body {
 .exam-card--done {
   border-color: #a9d4b1;
   background: #eef8ef;
+}
+
+.exam-card--done .exam-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px dashed #4a8c5e;
+  transform: rotate(-8deg);
+  font-size: 1.1rem;
 }
 
 .exam-card--activity {
@@ -846,6 +935,7 @@ body {
 /* ------------------ Team picker ------------------ */
 
 .team-picker {
+  position: relative;
   width: 100%;
   max-width: 560px;
   background: #fffaf0;
