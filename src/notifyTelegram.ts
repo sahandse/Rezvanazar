@@ -20,6 +20,6 @@ export function notifyLogin(student: Student) {
   return sendToTelegram(buildLoginMessage(student));
 }
 
-export function notifyExamResult(student: Student, score: number, total: number) {
-  return sendToTelegram(buildExamResultMessage(student, score, total));
+export function notifyExamResult(student: Student, examTitle: string, score: number, total: number) {
+  return sendToTelegram(buildExamResultMessage(student, examTitle, score, total));
 }

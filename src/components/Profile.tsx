@@ -1,44 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { Team } from "../data/teams";
-import type { Student } from "../types";
-import { exams } from "../data/exams";
+import { exams, isExamLocked, type Exam } from "../data/exams";
+import type { ActivityEntry, Student } from "../types";
 import ActivityModal from "./ActivityModal";
 
 interface ProfileProps {
   student: Student;
-  completed: boolean;
+  seatResults: Record<number, ActivityEntry> | undefined;
   team?: Team;
-  onStartExam: () => void;
+  onStartExam: (exam: Exam) => void;
+  onCompleteActivity: (exam: Exam) => void;
   onExit: () => void;
 }
 
-const ACTIVITY_STORAGE_KEY = "activity-completion";
-
-function loadActivityCompletion(): Record<number, boolean> {
-  try {
-    const raw = localStorage.getItem(ACTIVITY_STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
-}
-
-export default function Profile({ student, completed, team, onStartExam, onExit }: ProfileProps) {
+export default function Profile({
+  student,
+  seatResults,
+  team,
+  onStartExam,
+  onCompleteActivity,
+  onExit,
+}: ProfileProps) {
   const [shakeId, setShakeId] = useState<number | null>(null);
-  const [activityOpen, setActivityOpen] = useState(false);
-  const [activityCompleted, setActivityCompleted] = useState<Record<number, boolean>>(loadActivityCompletion);
-
-  useEffect(() => {
-    localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(activityCompleted));
-  }, [activityCompleted]);
+  const [openActivity, setOpenActivity] = useState<Exam | null>(null);
 
   function handleLockedClick(id: number) {
     setShakeId(id);
     setTimeout(() => setShakeId(null), 400);
-  }
-
-  function handleActivityComplete() {
-    setActivityCompleted((prev) => ({ ...prev, [student.seat]: true }));
   }
 
   return (
@@ -72,49 +60,51 @@ export default function Profile({ student, completed, team, onStartExam, onExit 
       <h3 className="profile__section-title">فعالیت‌های من</h3>
       <div className="profile__exams">
         {exams.map((exam) => {
-          const isDone = exam.id === 1 && completed;
-          const isActivityDone = exam.activityType === "activity" && activityCompleted[student.seat];
+          const isDone = Boolean(seatResults?.[exam.id]);
+          const locked = isExamLocked(exam);
+
           if (exam.activityType === "activity") {
             return (
               <button
                 key={exam.id}
-                className={`exam-card exam-card--activity${isActivityDone ? " exam-card--done" : ""}`}
-                style={{ borderColor: team?.primary }}
-                onClick={() => setActivityOpen(true)}
+                className={`exam-card exam-card--activity${isDone ? " exam-card--done" : ""}`}
+                style={!isDone ? { borderColor: team?.primary } : undefined}
+                onClick={() => setOpenActivity(exam)}
               >
-                <span className="exam-card__icon">{isActivityDone ? "✅" : "🧪"}</span>
+                <span className="exam-card__icon">{isDone ? "✅" : "🧪"}</span>
                 <span className="exam-card__title">{exam.title}</span>
-                <span className="exam-card__desc">{isActivityDone ? "انجام شد" : exam.description}</span>
+                <span className="exam-card__desc">{isDone ? "انجام شد" : exam.description}</span>
               </button>
             );
           }
+
           return (
             <button
               key={exam.id}
-              className={`exam-card${exam.locked ? " exam-card--locked" : ""}${
+              className={`exam-card${locked ? " exam-card--locked" : ""}${
                 shakeId === exam.id ? " exam-card--shake" : ""
               }${isDone ? " exam-card--done" : ""}`}
-              style={!exam.locked && !isDone ? { borderColor: team?.primary } : undefined}
-              onClick={() => (exam.locked ? handleLockedClick(exam.id) : onStartExam())}
+              style={!locked && !isDone ? { borderColor: team?.primary } : undefined}
+              onClick={() => (locked ? handleLockedClick(exam.id) : onStartExam(exam))}
             >
-              <span className="exam-card__icon">{exam.locked ? "🔒" : isDone ? "✅" : "📝"}</span>
+              <span className="exam-card__icon">{locked ? "🔒" : isDone ? "✅" : "📝"}</span>
               <span className="exam-card__title">{exam.title}</span>
               <span className="exam-card__desc">
-                {isDone ? "انجام شد" : exam.description}
+                {locked ? "به‌زودی — سؤالات این آزمون هنوز اضافه نشده" : isDone ? "انجام شد" : exam.description}
               </span>
             </button>
           );
         })}
       </div>
 
-      <ActivityModal
-        isOpen={activityOpen}
-        onClose={() => setActivityOpen(false)}
-        title="فعالیت سوم: جامد، مایع، گاز"
-        url="https://view.genially.com/6a59fe5f05bae8182ff49b9d"
-        onComplete={handleActivityComplete}
-      />
+      {openActivity && (
+        <ActivityModal
+          onClose={() => setOpenActivity(null)}
+          title={openActivity.title}
+          url={openActivity.activityUrl ?? ""}
+          onComplete={() => onCompleteActivity(openActivity)}
+        />
+      )}
     </div>
   );
 }
-

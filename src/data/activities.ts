@@ -1,9 +1,4 @@
-export interface Question {
-  id: number;
-  question: string;
-  options: string[];
-  correctIndex: number;
-}
+import type { Question } from "../types";
 
 export const statesOfMatterQuestions: Question[] = [
   {
@@ -15,7 +10,7 @@ export const statesOfMatterQuestions: Question[] = [
   {
     id: 2,
     question: "مادهٔ مایع چه شکلی دارد؟",
-    options: ["شکل ثابت دارد", "شکل خود جداره را می‌گیرد", "هیچ شکل ثابتی ندارد", "فقط شکل کره دارد"],
+    options: ["شکل ثابت دارد", "شکل ظرف خود را می‌گیرد", "هیچ شکلی ندارد", "فقط شکل کره دارد"],
     correctIndex: 1,
   },
   {
@@ -27,12 +22,12 @@ export const statesOfMatterQuestions: Question[] = [
   {
     id: 4,
     question: "یخ تبدیل به آب می‌شود. این تغییر حالت ماده به چه نامی می‌نامند؟",
-    options: ["انجماد", "بخارشدن", "گلاسیدن", "جوشیدن"],
+    options: ["انجماد", "ذوب شدن", "بخارشدن", "جوشیدن"],
     correctIndex: 1,
   },
   {
     id: 5,
-    question: "آب در یخچال به چه حالتی قرار می‌گیرد؟",
+    question: "آب در فریزر به چه حالتی قرار می‌گیرد؟",
     options: ["مایع", "گاز", "جامد", "پلاسما"],
     correctIndex: 2,
   },

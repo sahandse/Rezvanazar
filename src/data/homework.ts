@@ -1,11 +1,8 @@
-export interface Question {
-  id: number;
-  question: string;
-  options: string[];
-  correctIndex: number;
-}
+import type { Question } from "../types";
 
 // تکلیف تعاملی نمونه — یک آزمون کوتاه ریاضی و عمومی برای کلاس.
+// برای ویرایش سؤال‌ها همین فهرست را عوض کنید؛ «پاسخ درست» همیشه
+// correctIndex است و موقعیت گزینه‌ها در آرایهٔ options.
 export const homeworkQuestions: Question[] = [
   {
     id: 1,
@@ -76,7 +73,7 @@ export const homeworkQuestions: Question[] = [
   {
     id: 12,
     question: "مادهٔ مایع چه شکلی دارد؟",
-    options: ["شکل ثابت دارد", "شکل خود جداره را می‌گیرد", "هیچ شکل ثابتی ندارد", "فقط شکل کره دارد"],
+    options: ["شکل ثابت دارد", "شکل ظرف خود را می‌گیرد", "هیچ شکلی ندارد", "فقط شکل کره دارد"],
     correctIndex: 1,
   },
   {
@@ -88,12 +85,12 @@ export const homeworkQuestions: Question[] = [
   {
     id: 14,
     question: "یخ تبدیل به آب می‌شود. این تغییر حالت ماده به چه نامی می‌نامند؟",
-    options: ["انجماد", "بخارشدن", "گلاسیدن", "جوشیدن"],
+    options: ["انجماد", "ذوب شدن", "بخارشدن", "جوشیدن"],
     correctIndex: 1,
   },
   {
     id: 15,
-    question: "آب در یخچال به چه حالتی قرار می‌گیرد؟",
+    question: "آب در فریزر به چه حالتی قرار می‌گیرد؟",
     options: ["مایع", "گاز", "جامد", "پلاسما"],
     correctIndex: 2,
   },

@@ -19,6 +19,6 @@ export function notifyLogin(student: Student) {
   return sendToBale(buildLoginMessage(student));
 }
 
-export function notifyExamResult(student: Student, score: number, total: number) {
-  return sendToBale(buildExamResultMessage(student, score, total));
+export function notifyExamResult(student: Student, examTitle: string, score: number, total: number) {
+  return sendToBale(buildExamResultMessage(student, examTitle, score, total));
 }

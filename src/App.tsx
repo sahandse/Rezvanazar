@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Classroom from "./components/Classroom";
 import LoginModal from "./components/LoginModal";
 import TeamPicker from "./components/TeamPicker";
@@ -7,9 +7,10 @@ import Profile from "./components/Profile";
 import Homework from "./components/Homework";
 import { students } from "./data/students";
 import { teams } from "./data/teams";
+import type { Exam } from "./data/exams";
 import { notifyExamResult as notifyExamResultTelegram, notifyLogin as notifyLoginTelegram } from "./notifyTelegram";
 import { notifyExamResult as notifyExamResultBale, notifyLogin as notifyLoginBale } from "./notifyBale";
-import type { ActivityLog, Student } from "./types";
+import type { ActivityEntry, ActivityLog, Student } from "./types";
 
 const STORAGE_KEY = "activity-log";
 const TEAM_STORAGE_KEY = "team-choices";
@@ -20,7 +21,16 @@ type TeamChoices = Record<number, string>;
 function loadActivityLog(): ActivityLog {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as Record<string, ActivityEntry | Record<string, ActivityEntry>>;
+    // نسخهٔ پیشین نتایج را فقط بر پایهٔ صندلی ذخیره می‌کرد (بدون شناسهٔ آزمون).
+    // آن‌ها را به آزمون ۱ (تکلیف هفتگی) منتقل می‌کنیم تا رکوردها پاک نشوند.
+    return Object.fromEntries(
+      Object.entries(parsed).map(([seat, value]) => [
+        seat,
+        "completedAt" in value ? { "1": value } : value,
+      ]),
+    ) as ActivityLog;
   } catch {
     return {};
   }
@@ -39,6 +49,7 @@ function App() {
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [session, setSession] = useState<Student | null>(null);
   const [view, setView] = useState<View>("welcome");
+  const [activeExam, setActiveExam] = useState<Exam | null>(null);
   const [activityLog, setActivityLog] = useState<ActivityLog>(loadActivityLog);
   const [teamChoices, setTeamChoices] = useState<TeamChoices>(loadTeamChoices);
 
@@ -57,12 +68,16 @@ function App() {
     return teams.find((team) => team.id === teamId);
   }
 
-  function currentTeam() {
-    if (!session) return undefined;
-    return teamForSeat(session.seat);
-  }
+  const appTheme = session ? teamForSeat(session.seat) : undefined;
 
-  const appTheme = currentTeam();
+  const handleWelcomeDone = useCallback(() => setView("profile"), []);
+
+  function recordResult(seat: number, examId: number, entry: ActivityEntry) {
+    setActivityLog((prev) => ({
+      ...prev,
+      [seat]: { ...prev[seat], [examId]: entry },
+    }));
+  }
 
   function handleLoginSuccess(student: Student) {
     setSelectedStudent(null);
@@ -79,18 +94,30 @@ function App() {
     }
   }
 
+  function handleStartExam(exam: Exam) {
+    setActiveExam(exam);
+    setView("exam");
+  }
+
   function handleHomeworkComplete(score: number, total: number) {
-    if (session) {
-      setActivityLog((prev) => ({
-        ...prev,
-        [session.seat]: { score, total, completedAt: new Date().toISOString() },
-      }));
-      notifyExamResultTelegram(session, score, total);
-      notifyExamResultBale(session, score, total);
-    }
+    if (!session || !activeExam) return;
+    recordResult(session.seat, activeExam.id, { score, total, completedAt: new Date().toISOString() });
+    notifyExamResultTelegram(session, activeExam.title, score, total);
+    notifyExamResultBale(session, activeExam.title, score, total);
+  }
+
+  function handleActivityComplete(exam: Exam) {
+    if (!session) return;
+    recordResult(session.seat, exam.id, { completedAt: new Date().toISOString() });
+  }
+
+  function handleBackToProfile() {
+    setActiveExam(null);
+    setView("profile");
   }
 
   function handleExitToClassroom() {
+    setActiveExam(null);
     setSession(null);
   }
 
@@ -120,21 +147,27 @@ function App() {
       {session && view === "team-select" && <TeamPicker student={session} onChoose={handleTeamChosen} />}
 
       {session && view === "welcome" && (
-        <WelcomeAnimation student={session} team={appTheme} onDone={() => setView("profile")} />
+        <WelcomeAnimation student={session} team={appTheme} onDone={handleWelcomeDone} />
       )}
 
       {session && view === "profile" && (
         <Profile
           student={session}
-          completed={completedSeats.has(session.seat)}
+          seatResults={activityLog[session.seat]}
           team={appTheme}
-          onStartExam={() => setView("exam")}
+          onStartExam={handleStartExam}
+          onCompleteActivity={handleActivityComplete}
           onExit={handleExitToClassroom}
         />
       )}
 
-      {session && view === "exam" && (
-        <Homework student={session} onComplete={handleHomeworkComplete} onExit={() => setView("profile")} />
+      {session && view === "exam" && activeExam && (
+        <Homework
+          student={session}
+          exam={activeExam}
+          onComplete={handleHomeworkComplete}
+          onExit={handleBackToProfile}
+        />
       )}
 
       {selectedStudent && (

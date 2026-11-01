@@ -8,18 +8,90 @@ body,
   height: 100%;
 }
 
+:root {
+  --paper: #faf3e4;
+  --card: #fffaf0;
+  --card-alt: #fbf3e0;
+  --ink: #2b2118;
+  --ink-soft: #6b4a2f;
+  --ink-muted: #8a7a5f;
+  --line: #eadfc4;
+  --edge: #d8b285;
+  --wood: #7a4f2c;
+  --wood-dark: #573a20;
+  --gold: #c9a15a;
+  --chalk: #234d3a;
+  --chalk-ink: #fdf6e3;
+  --correct: #4a8c5e;
+  --correct-soft: #eef8ef;
+  --wrong: #c0392b;
+  --shadow-card: 0 8px 24px rgba(60, 40, 20, 0.12);
+  --shadow-hover: 0 10px 22px rgba(60, 40, 20, 0.18);
+  --radius-card: 24px;
+  --tape: rgba(255, 226, 140, 0.6);
+}
+
 body {
   margin: 0;
   font-family: "Vazirmatn", "Tahoma", sans-serif;
-  background-color: #faf3e4;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 35px,
-    rgba(169, 116, 74, 0.08) 36px
-  );
-  color: #2b2118;
+  background-color: var(--paper);
+  /* کاغذ دفتر مشق: خطوط افقی به‌همراه حاشیهٔ قرمز سمت راست */
+  background-image: linear-gradient(rgba(192, 57, 43, 0.26), rgba(192, 57, 43, 0.26)),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 35px,
+      rgba(169, 116, 74, 0.08) 36px
+    );
+  background-repeat: no-repeat, repeat;
+  background-size: 2px 100%, auto;
+  background-position: right 40px top 0, 0 0;
+  color: var(--ink);
   direction: rtl;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* حلقهٔ فوکوس یکسان برای ناوبری با کیبورد */
+:where(button, a, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* چسب‌نواری روی گوشهٔ کارت‌ها، مثل برگه‌های چسبیده به تابلوی اعلانات */
+.classroom::before,
+.classroom::after,
+.profile::before,
+.profile::after,
+.homework__card::before,
+.homework__card::after,
+.team-picker::before,
+.team-picker::after {
+  content: "";
+  position: absolute;
+  top: -11px;
+  width: 56px;
+  height: 22px;
+  background: var(--tape);
+  border: 1px solid rgba(169, 116, 74, 0.3);
+  box-shadow: 0 2px 4px rgba(60, 40, 20, 0.14);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.classroom::before,
+.profile::before,
+.homework__card::before,
+.team-picker::before {
+  right: 34px;
+  transform: rotate(-6deg);
+}
+
+.classroom::after,
+.profile::after,
+.homework__card::after,
+.team-picker::after {
+  left: 34px;
+  transform: rotate(5deg);
 }
 
 .app {
@@ -33,28 +105,65 @@ body {
   --team-secondary: #1a1a1a;
 }
 
+/* تختهٔ چوبی سربرگ، مثل تختهٔ نام جلوی مدرسه */
+.app__header {
+  position: relative;
+  width: 100%;
+  max-width: 660px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(134, 88, 50, 0.4), transparent),
+    linear-gradient(180deg, var(--wood), var(--wood-dark));
+  border-radius: 16px;
+  padding: 18px 30px 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 22px rgba(60, 40, 20, 0.25), inset 0 2px 0 rgba(255, 255, 255, 0.12);
+}
+
+.app__header::before,
+.app__header::after {
+  content: "";
+  position: absolute;
+  top: 11px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f3d9a4, var(--gold) 75%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.app__header::before {
+  right: 14px;
+}
+
+.app__header::after {
+  left: 14px;
+}
+
 .app__header h1 {
   margin: 0 0 4px;
-  font-size: 2rem;
+  font-size: clamp(1.45rem, 5vw, 2rem);
   font-weight: 700;
-  color: var(--team-primary);
+  color: var(--chalk-ink);
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.35);
 }
 
 .app__header p {
   margin: 0;
-  color: #6b4a2f;
+  color: #e7cea5;
   font-weight: 500;
+  font-size: 0.95rem;
 }
 
 /* ------------------ Classroom ------------------ */
 
 .classroom {
+  position: relative;
   width: 100%;
   max-width: 900px;
-  background: #fffaf0;
-  border-radius: 24px;
-  padding: 32px 24px 36px;
-  box-shadow: 0 8px 24px rgba(60, 40, 20, 0.12);
+  background: var(--card);
+  border-radius: var(--radius-card);
+  padding: 34px 24px 36px;
+  box-shadow: var(--shadow-card);
   border: 1.5px solid var(--team-primary);
 }
 
@@ -67,12 +176,15 @@ body {
 }
 
 .blackboard {
-  background: #234d3a;
+  background: radial-gradient(circle at 22% 28%, rgba(255, 255, 255, 0.06), transparent 40%),
+    radial-gradient(circle at 78% 68%, rgba(255, 255, 255, 0.04), transparent 35%), var(--chalk);
   border-radius: 14px;
   padding: 22px 30px;
   min-width: 280px;
   text-align: center;
   position: relative;
+  border: 6px solid var(--wood);
+  box-shadow: 0 6px 14px rgba(40, 25, 10, 0.3), inset 0 0 40px rgba(0, 0, 0, 0.25);
 }
 
 .blackboard__frame {
@@ -82,26 +194,28 @@ body {
 }
 
 .blackboard__text {
-  color: #fdf6e3;
+  color: var(--chalk-ink);
   font-size: 1.4rem;
   font-weight: 700;
   margin: 0;
   font-family: "Vazirmatn", sans-serif;
+  letter-spacing: 0.01em;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3), 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .blackboard__subtext {
-  color: #bcdcc7;
+  color: #c7ddcd;
   font-size: 0.9rem;
   margin: 0;
 }
 
 .blackboard__tray {
-  height: 5px;
+  height: 7px;
   width: 70%;
-  background: #dcd3b8;
+  background: linear-gradient(180deg, #e6dcc0, #c9bd9c);
   border-radius: 4px;
   margin: 16px auto 0;
-  opacity: 0.6;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
 
 .teacher {
@@ -138,10 +252,10 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  background: #fbf3e0;
-  border: 1.5px solid #eadfc4;
+  background: var(--card-alt);
+  border: 1.5px solid var(--line);
   border-radius: 16px;
-  padding: 14px 8px 12px;
+  padding: 16px 8px 14px;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   font-family: inherit;
@@ -149,13 +263,13 @@ body {
 
 .seat:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 14px rgba(60, 40, 20, 0.12);
+  box-shadow: var(--shadow-hover);
   border-color: var(--team-primary);
 }
 
 .seat--done {
   border-color: #a9d4b1;
-  background: #eef8ef;
+  background: var(--correct-soft);
 }
 
 .seat__number {
@@ -163,23 +277,24 @@ body {
   top: 6px;
   right: 8px;
   font-weight: 700;
-  color: #a9744a;
+  color: var(--wood);
   font-size: 0.85rem;
 }
 
 .seat__badge {
   position: absolute;
-  top: 6px;
-  left: 8px;
-  background: #4a8c5e;
+  top: 5px;
+  left: 5px;
+  background: var(--correct);
   color: #fff;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 21px;
+  height: 21px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
+  box-shadow: 0 2px 4px rgba(47, 107, 65, 0.35);
 }
 
 .seat__icon {
@@ -233,8 +348,9 @@ body {
 }
 
 .modal__banner {
-  background: var(--team-primary);
-  padding: 22px 24px 18px;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.07), transparent 45%), var(--chalk);
+  border-bottom: 5px solid var(--wood);
+  padding: 24px 24px 20px;
   text-align: center;
 }
 
@@ -273,7 +389,7 @@ body {
 
 .modal__subtitle {
   margin: 0;
-  color: #bcdcc7;
+  color: #c7ddcd;
   font-size: 0.85rem;
 }
 
@@ -294,20 +410,26 @@ body {
 
 .field input {
   font-family: inherit;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1.5px solid #d8b285;
+  padding: 11px 13px;
+  border-radius: 12px;
+  border: 1.5px solid var(--edge);
   font-size: 1rem;
   background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.field input:focus {
+.field input:focus-visible {
   outline: none;
   border-color: var(--team-primary);
+  box-shadow: 0 0 0 4px rgba(74, 140, 94, 0.18);
 }
 
 .modal__error {
-  color: #c0392b;
+  background: #fdecea;
+  color: #8e2a1f;
+  border: 1px solid #f2b8ae;
+  border-radius: 10px;
+  padding: 8px 12px;
   font-size: 0.85rem;
   margin: -4px 0 0;
 }
@@ -317,12 +439,12 @@ body {
 .btn {
   font-family: inherit;
   border: none;
-  border-radius: 10px;
-  padding: 10px 18px;
+  border-radius: 999px;
+  padding: 10px 20px;
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  transition: filter 0.15s ease, transform 0.15s ease;
+  transition: filter 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn:active {
@@ -332,6 +454,7 @@ body {
 .btn--primary {
   background: var(--team-primary);
   color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 3px 8px rgba(60, 40, 20, 0.18);
 }
 
 .btn--primary:disabled {
@@ -353,6 +476,12 @@ body {
   background: #f3e3c3;
 }
 
+.btn--ghost:disabled {
+  color: #b3a488;
+  border-color: #eadfc4;
+  cursor: not-allowed;
+}
+
 /* ------------------ Homework ------------------ */
 
 .homework {
@@ -363,11 +492,12 @@ body {
 }
 
 .homework__card {
-  background: #fffaf0;
-  border-radius: 24px;
+  position: relative;
+  background: var(--card);
+  border-radius: var(--radius-card);
   padding: 28px 24px;
   width: 100%;
-  box-shadow: 0 8px 24px rgba(60, 40, 20, 0.12);
+  box-shadow: var(--shadow-card);
   border: 1.5px solid var(--team-primary);
 }
 
@@ -383,17 +513,26 @@ body {
   margin-bottom: 10px;
 }
 
+.homework__subtitle {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #a9744a;
+}
+
 .homework__progress {
-  height: 8px;
-  background: #eadfc4;
-  border-radius: 4px;
+  height: 10px;
+  background: var(--line);
+  border-radius: 999px;
   overflow: hidden;
   margin-bottom: 20px;
+  box-shadow: inset 0 1px 2px rgba(60, 40, 20, 0.18);
 }
 
 .homework__progress-bar {
   height: 100%;
-  background: var(--team-primary);
+  background: linear-gradient(90deg, var(--team-primary), var(--gold));
+  border-radius: 999px;
   transition: width 0.3s ease;
 }
 
@@ -405,10 +544,13 @@ body {
 }
 
 .homework__question {
-  font-size: 1.15rem;
-  color: #2b2118;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--ink);
   margin: 0;
   flex: 1;
+  /* هایلایت ماژیک زرد زیر سؤال */
+  background: linear-gradient(180deg, transparent 68%, rgba(255, 226, 140, 0.6) 68%);
 }
 
 .homework__speak-btn {
@@ -442,18 +584,26 @@ body {
 
 .option {
   font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   text-align: right;
-  padding: 12px 16px;
-  border-radius: 12px;
-  border: 1.5px solid #d8b285;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: 1.5px solid var(--edge);
   background: #fff;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  color: var(--ink);
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .option:hover:not(:disabled) {
   border-color: var(--team-primary);
+  background: #fffdf5;
+  transform: translateX(-3px);
+  box-shadow: 0 3px 10px rgba(60, 40, 20, 0.1);
 }
 
 .option:disabled {
@@ -461,15 +611,31 @@ body {
 }
 
 .option--correct {
-  background: #eef8ef;
-  border-color: #4a8c5e;
+  background: var(--correct-soft);
+  border-color: var(--correct);
   color: #2f6b41;
 }
 
 .option--wrong {
   background: #fdecea;
-  border-color: #c0392b;
+  border-color: var(--wrong);
   color: #8e2a1f;
+}
+
+/* نشانهٔ نتیجه در انتهای گزینه */
+.option--correct::after,
+.option--wrong::after {
+  margin-inline-start: auto;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.option--correct::after {
+  content: "✓";
+}
+
+.option--wrong::after {
+  content: "✕";
 }
 
 .homework__actions {
@@ -496,17 +662,20 @@ body {
   margin: 16px auto 0;
   display: block;
   border-radius: 12px;
+  border: 5px solid var(--wood);
+  box-shadow: 0 8px 18px rgba(60, 40, 20, 0.2);
 }
 
 /* ------------------ Profile ------------------ */
 
 .profile {
+  position: relative;
   width: 100%;
   max-width: 640px;
-  background: #fffaf0;
-  border-radius: 24px;
+  background: var(--card);
+  border-radius: var(--radius-card);
   padding: 28px 24px;
-  box-shadow: 0 8px 24px rgba(60, 40, 20, 0.12);
+  box-shadow: var(--shadow-card);
   border: 1.5px solid var(--team-primary);
   animation: profile-in 0.35s ease;
 }
@@ -582,6 +751,16 @@ body {
   margin: 0 0 14px;
   font-size: 1rem;
   color: #4a2f1c;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile__section-title::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--line) 0 8px, transparent 8px 14px);
 }
 
 .profile__exams {
@@ -601,11 +780,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   text-align: center;
-  background: #fbf3e0;
-  border: 1.5px solid #eadfc4;
-  border-radius: 16px;
+  background: var(--card-alt);
+  border: 1.5px solid var(--line);
+  border-radius: 18px;
   padding: 20px 12px;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
@@ -613,7 +792,7 @@ body {
 
 .exam-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 14px rgba(60, 40, 20, 0.1);
+  box-shadow: var(--shadow-hover);
   border-color: var(--team-primary);
 }
 
@@ -673,14 +852,36 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px;
-  border-bottom: 1px solid #eadfc4;
+  gap: 12px;
+  padding: 12px 18px;
+  background: linear-gradient(180deg, var(--wood), var(--wood-dark));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .activity-modal__title {
   margin: 0;
-  font-size: 1.1rem;
-  color: #4a2f1c;
+  font-size: 1.05rem;
+  color: var(--chalk-ink);
+}
+
+.activity-modal__controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.activity-modal__open {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #f0dcc0;
+  text-decoration: none;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+
+.activity-modal__open:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .activity-modal__close {
@@ -688,7 +889,7 @@ body {
   border: none;
   font-size: 1.6rem;
   cursor: pointer;
-  color: #6b4a2f;
+  color: var(--chalk-ink);
   line-height: 1;
 }
 
@@ -702,6 +903,15 @@ body {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+.activity-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--card-alt);
+  border-top: 1px solid var(--line);
 }
 
 .activity-modal__loader {
@@ -718,7 +928,15 @@ body {
 }
 
 .exam-card__icon {
-  font-size: 1.6rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1.5px solid var(--line);
+  font-size: 1.35rem;
 }
 
 .exam-card__title {
@@ -752,6 +970,11 @@ body {
 .welcome__card {
   text-align: center;
   color: #fff;
+  background: rgba(255, 250, 240, 0.12);
+  border: 1.5px solid rgba(255, 250, 240, 0.35);
+  border-radius: 22px;
+  padding: 28px 34px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
 }
 
 .welcome__card h2 {
@@ -846,12 +1069,13 @@ body {
 /* ------------------ Team picker ------------------ */
 
 .team-picker {
+  position: relative;
   width: 100%;
   max-width: 560px;
-  background: #fffaf0;
-  border-radius: 24px;
+  background: var(--card);
+  border-radius: var(--radius-card);
   padding: 28px 24px;
-  box-shadow: 0 8px 24px rgba(60, 40, 20, 0.12);
+  box-shadow: var(--shadow-card);
   border: 1.5px solid var(--team-primary);
   text-align: center;
 }
@@ -943,5 +1167,18 @@ body {
   color: #8a6a4f;
   text-align: center;
   line-height: 1.4;
+}
+
+/* ------------------ Accessibility ------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 

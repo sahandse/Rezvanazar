@@ -1,4 +1,3 @@
-import { exams } from "./data/exams";
 import type { Student } from "./types";
 
 function escapeHtml(text: string) {
@@ -23,13 +22,13 @@ export function buildLoginMessage(student: Student) {
   ].join("\n");
 }
 
-export function buildExamResultMessage(student: Student, score: number, total: number) {
+export function buildExamResultMessage(student: Student, examTitle: string, score: number, total: number) {
   const name = escapeHtml(student.name);
   const username = escapeHtml(student.username);
-  const examTitle = escapeHtml(exams.find((exam) => exam.id === 1)?.title ?? "تکلیف تعاملی");
+  const title = escapeHtml(examTitle);
   const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
   return [
-    `📋 <b>نتیجه‌ی ${examTitle}</b>`,
+    `📋 <b>نتیجه‌ی ${title}</b>`,
     `👤 <b>${name}</b> (صندلی ${student.seat})`,
     `🔑 نام‌کاربری: <code>${username}</code>`,
     `✅ نمره: <b>${score} از ${total}</b> (${percentage}٪)`,

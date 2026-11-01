@@ -1,43 +1,49 @@
 import { useEffect, useRef, useState } from "react";
+import type { Exam } from "../data/exams";
 import type { Student } from "../types";
-import { homeworkQuestions } from "../data/homework";
 import { playCorrectSound, playWrongSound } from "../sound";
 import { hasPersianVoice, speakPersian } from "../speech";
 import { downloadCanvasAsPng, drawCertificate } from "../certificate";
 
 interface HomeworkProps {
   student: Student;
+  exam: Exam;
   onComplete: (score: number, total: number) => void;
   onExit: () => void;
 }
 
-export default function Homework({ student, onComplete, onExit }: HomeworkProps) {
+export default function Homework({ student, exam, onComplete, onExit }: HomeworkProps) {
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [certificateReady, setCertificateReady] = useState(false);
   const [voiceAvailable, setVoiceAvailable] = useState(true);
 
   const certificateRef = useRef<HTMLCanvasElement>(null);
 
-  const question = homeworkQuestions[step];
-  const isLast = step === homeworkQuestions.length - 1;
+  const questions = exam.questions ?? [];
+  const total = questions.length;
+  const question = questions[step];
+  const isLast = step === total - 1;
 
   useEffect(() => {
     hasPersianVoice().then(setVoiceAvailable);
   }, []);
 
   useEffect(() => {
-    if (finished && certificateRef.current) {
-      drawCertificate(certificateRef.current, {
-        name: student.name,
-        seat: student.seat,
-        score,
-        total: homeworkQuestions.length,
-        date: new Date().toLocaleDateString("fa-IR"),
-      });
-    }
-  }, [finished, student, score]);
+    if (!finished || !certificateRef.current) return;
+    // رسم کارت ناهمگام است (منتظر آماده شدن فونت می‌ماند)، تا «دانلود» روی
+    // کارت نیمه‌کشیده یا خالی کلیک نشود.
+    drawCertificate(certificateRef.current, {
+      name: student.name,
+      seat: student.seat,
+      score,
+      total,
+      date: new Date().toLocaleDateString("fa-IR"),
+      title: exam.title,
+    }).then(() => setCertificateReady(true));
+  }, [finished, student, score, total, exam.title]);
 
   function handleAnswer(index: number) {
     if (selected !== null) return;
@@ -59,7 +65,7 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
   function handleNext() {
     if (isLast) {
       setFinished(true);
-      onComplete(score, homeworkQuestions.length);
+      onComplete(score, total);
     } else {
       setStep((s) => s + 1);
       setSelected(null);
@@ -71,14 +77,15 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
       <div className="homework">
         <div className="homework__card homework__card--result">
           <h2>آفرین، {student.name}! 🎉</h2>
+          <p className="homework__subtitle">{exam.title}</p>
           <p className="homework__score">
-            امتیاز شما: {score} از {homeworkQuestions.length}
+            امتیاز شما: {score} از {total}
           </p>
-          <p>تکلیف تعاملی امروز با موفقیت انجام شد.</p>
+          <p>این آزمون با موفقیت انجام شد.</p>
           <canvas ref={certificateRef} className="certificate" />
           <div className="homework__actions homework__actions--result">
-            <button className="btn btn--ghost" onClick={handleDownloadCertificate}>
-              دانلود کارت افتخار
+            <button className="btn btn--ghost" onClick={handleDownloadCertificate} disabled={!certificateReady}>
+              {certificateReady ? "دانلود کارت افتخار" : "در حال آماده کردن کارت..."}
             </button>
             <button className="btn btn--primary" onClick={onExit}>
               بازگشت به پروفایل
@@ -97,14 +104,16 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
             {student.name} — صندلی {student.seat}
           </span>
           <span>
-            سوال {step + 1} از {homeworkQuestions.length}
+            سوال {step + 1} از {total}
           </span>
         </div>
+
+        <p className="homework__subtitle">{exam.title}</p>
 
         <div className="homework__progress">
           <div
             className="homework__progress-bar"
-            style={{ width: `${((step + (selected !== null ? 1 : 0)) / homeworkQuestions.length) * 100}%` }}
+            style={{ width: `${((step + (selected !== null ? 1 : 0)) / total) * 100}%` }}
           />
         </div>
 
@@ -145,7 +154,7 @@ export default function Homework({ student, onComplete, onExit }: HomeworkProps)
             بازگشت به پروفایل
           </button>
           <button className="btn btn--primary" onClick={handleNext} disabled={selected === null}>
-            {isLast ? "پایان تکلیف" : "سوال بعدی"}
+            {isLast ? "پایان آزمون" : "سوال بعدی"}
           </button>
         </div>
       </div>

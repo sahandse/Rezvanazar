@@ -5,6 +5,11 @@ function getAudioContext() {
     const AudioContextCtor = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
     audioContext = new AudioContextCtor();
   }
+  // بعد از برگشتن تب به پس‌زمینه یا بی‌صدا شدن موقت، مرورگر Context را
+  // suspended می‌کند؛ بدون resume صداها بی‌صدا رد می‌شوند.
+  if (audioContext.state === "suspended") {
+    void audioContext.resume();
+  }
   return audioContext;
 }
 

@@ -7,9 +7,17 @@ export interface Student {
 }
 
 export interface ActivityEntry {
-  score: number;
-  total: number;
+  score?: number;
+  total?: number;
   completedAt: string;
 }
 
-export type ActivityLog = Record<number, ActivityEntry>;
+// نتایج به صندلی و سپس شناسهٔ آزمون نگه داشته می‌شوند.
+export type ActivityLog = Record<number, Record<number, ActivityEntry>>;
+
+export interface Question {
+  id: number;
+  question: string;
+  options: string[];
+  correctIndex: number;
+}
