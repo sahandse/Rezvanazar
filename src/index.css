@@ -1,33 +1,28 @@
 :root {
-  --paper: #f7f5f2;
-  --card: #ffffff;
-  --card-alt: #faf9f7;
-  --ink: #1a1a1a;
-  --ink-soft: #5a5a5a;
-  --ink-muted: #8a8a8a;
-  --line: #e8e6e2;
-  --edge: #d4d2ce;
-  --accent: #2563eb;
-  --accent-soft: #eff4ff;
-  --wood: #5a5a5a;
-  --wood-dark: #1a1a1a;
-  --gold: #2563eb;
-  --chalk: #2563eb;
-  --chalk-ink: #ffffff;
-  --ink-soft: #5a5a5a;
-  --ink-muted: #8a8a8a;
-  --tape: rgba(0,0,0,0.06);
-  --edge: #d4d2ce;
-  --correct: #16a34a;
-  --correct-soft: #ecfdf5;
-  --wrong: #dc2626;
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.10);
-  --radius-card: 16px;
-  --radius-btn: 12px;
+  --paper: #faf3e4;
+  --card: #fffaf0;
+  --card-alt: #fbf3e0;
+  --ink: #2b2118;
+  --ink-soft: #6b4a2f;
+  --ink-muted: #8a7a5f;
+  --line: #eadfc4;
+  --edge: #d8b285;
+  --wood: #7a4f2c;
+  --wood-dark: #573a20;
+  --gold: #c9a15a;
+  --chalk: #234d3a;
+  --chalk-ink: #fdf6e3;
+  --accent: #234d3a;
+  --accent-soft: #eef8ef;
+  --correct: #4a8c5e;
+  --correct-soft: #eef8ef;
+  --wrong: #c0392b;
+  --shadow-card: 0 8px 24px rgba(60, 40, 20, 0.12);
+  --shadow-hover: 0 10px 22px rgba(60, 40, 20, 0.18);
+  --radius-card: 24px;
+  --radius-btn: 14px;
+  --tape: rgba(255, 226, 140, 0.6);
 }
-
-/* ------------------ Minimal base ------------------ */
 body {
   margin: 0;
   font-family: "Vazirmatn", "Tahoma", sans-serif;
