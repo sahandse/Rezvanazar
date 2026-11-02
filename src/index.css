@@ -1259,30 +1259,6 @@ body {
   }
 }
 
-/* ------------------ Dark mode ------------------ */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #1a1612;
-    --card: #2a221a;
-    --card-alt: #332a20;
-    --ink: #f5ead6;
-    --ink-soft: #d8c4a0;
-    --ink-muted: #a89878;
-    --line: #3a3024;
-    --edge: #5a4a36;
-    --wood: #a07a50;
-    --wood-dark: #7a5a36;
-    --gold: #e0b870;
-    --chalk: #4a7a5a;
-    --chalk-ink: #e8f0e8;
-    --correct: #6ab87a;
-    --correct-soft: #1e2a1e;
-    --wrong: #e05a4a;
-    --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.4);
-    --shadow-hover: 0 10px 22px rgba(0, 0, 0, 0.5);
-  }
-}
-
 /* ------------------ Animations ------------------ */
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
