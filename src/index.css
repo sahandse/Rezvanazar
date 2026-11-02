@@ -8,8 +8,85 @@ body,
   height: 100%;
 }
 
+/* کاهش حرکت برای کاربرانی که motion را کم می‌خواهند */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* حالت خالی (empty state) برای بخش‌ها */
+.empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+}
+
+/* بهبود کنتراست و فوکوس روی ورودی‌ها */
+input,
+textarea,
+select {
+  font-family: inherit;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.6rem 0.8rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 161, 90, 0.25);
+  outline: none;
+}
+
+/* دکمه‌های یکپارچه */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn--primary {
+  background: var(--chalk);
+  color: var(--chalk-ink);
+  border-color: var(--chalk);
+}
+.btn--primary:hover {
+  background: var(--wood-dark);
+  border-color: var(--wood-dark);
+}
+.btn--danger {
+  background: var(--wrong);
+  color: #fff;
+  border-color: var(--wrong);
+}
+
 :root {
-  --paper: #faf3e4;
   --card: #fffaf0;
   --card-alt: #fbf3e0;
   --ink: #2b2118;
