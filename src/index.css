@@ -9,6 +9,15 @@
   --edge: #d4d2ce;
   --accent: #2563eb;
   --accent-soft: #eff4ff;
+  --wood: #5a5a5a;
+  --wood-dark: #1a1a1a;
+  --gold: #2563eb;
+  --chalk: #2563eb;
+  --chalk-ink: #ffffff;
+  --ink-soft: #5a5a5a;
+  --ink-muted: #8a8a8a;
+  --tape: rgba(0,0,0,0.06);
+  --edge: #d4d2ce;
   --correct: #16a34a;
   --correct-soft: #ecfdf5;
   --wrong: #dc2626;
