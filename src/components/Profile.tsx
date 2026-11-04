@@ -32,16 +32,22 @@ export default function Profile({
   return (
     <div className="profile">
       <div className="profile__topbar">
-        <button className="btn btn--ghost profile__exit" onClick={onExit}>
+        <button className="btn btn--ghost" onClick={onExit}>
           خروج به کلاس
         </button>
       </div>
       <div className="profile__header">
-        <div
-          className="profile__avatar"
-          style={team ? { background: team.primary, color: team.secondary } : undefined}
-        >
+        <div className="profile__avatar">
           {student.name.charAt(0)}
+          {team && (
+            <img
+              className="profile__team-sticker"
+              src={team.badge}
+              alt={`نشان ${team.name}`}
+              width={36}
+              height={36}
+            />
+          )}
         </div>
         <div>
           <span className="profile__badge">کارت دانش‌آموزی</span>
@@ -50,8 +56,8 @@ export default function Profile({
             صندلی {student.seat} — نام‌کاربری: {student.username}
           </p>
           {team && (
-            <p className="profile__team" style={{ color: team.primary }}>
-              ⚽ {team.name} (شماره {team.number})
+            <p className="profile__team">
+              {team.emoji} {team.name}
             </p>
           )}
         </div>
@@ -68,7 +74,6 @@ export default function Profile({
               <button
                 key={exam.id}
                 className={`exam-card exam-card--activity${isDone ? " exam-card--done" : ""}`}
-                style={!isDone ? { borderColor: team?.primary } : undefined}
                 onClick={() => setOpenActivity(exam)}
               >
                 <span className="exam-card__icon">{isDone ? "✅" : "🧪"}</span>
@@ -84,7 +89,6 @@ export default function Profile({
               className={`exam-card${locked ? " exam-card--locked" : ""}${
                 shakeId === exam.id ? " exam-card--shake" : ""
               }${isDone ? " exam-card--done" : ""}`}
-              style={!locked && !isDone ? { borderColor: team?.primary } : undefined}
               onClick={() => (locked ? handleLockedClick(exam.id) : onStartExam(exam))}
             >
               <span className="exam-card__icon">{locked ? "🔒" : isDone ? "✅" : "📝"}</span>

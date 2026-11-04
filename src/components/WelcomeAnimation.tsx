@@ -11,7 +11,7 @@ interface WelcomeAnimationProps {
 const VARIANTS = ["confetti", "bounce", "slide", "zoom"] as const;
 type Variant = (typeof VARIANTS)[number];
 
-const CONFETTI_COLORS = ["#4a8c5e", "#a9744a", "#234d3a", "#7a3b46", "#e0b34c"];
+const CONFETTI_COLORS = ["#e8503f", "#f0951c", "#f7c948", "#4aa867", "#3d84c6", "#8a5fc0"];
 
 export default function WelcomeAnimation({ student, team, onDone }: WelcomeAnimationProps) {
   const [leaving, setLeaving] = useState(false);
@@ -37,10 +37,7 @@ export default function WelcomeAnimation({ student, team, onDone }: WelcomeAnima
   }, [onDone]);
 
   return (
-    <div
-      className={`welcome welcome--${variant}${leaving ? " welcome--leaving" : ""}`}
-      style={team ? { background: `${team.primary}eb` } : undefined}
-    >
+    <div className={`welcome welcome--${variant}${leaving ? " welcome--leaving" : ""}`}>
       {variant === "confetti" &&
         confetti.map((c, i) => (
           <span
@@ -54,10 +51,13 @@ export default function WelcomeAnimation({ student, team, onDone }: WelcomeAnima
             }}
           />
         ))}
-      <div className="welcome__card">
-        <p className="welcome__emoji">🎉</p>
+      <div className="welcome__card taped">
+        <p className="welcome__emoji">{team ? `${team.emoji} 🎉` : "🎉"}</p>
         <h2>خوش اومدی، {student.name}!</h2>
-        <p>صندلی {student.seat} — بریم سراغ پروفایلت</p>
+        <p>
+          صندلی {student.seat}
+          {team ? ` — تیم ${team.name}` : " — بریم سراغ پروفایلت"}
+        </p>
       </div>
     </div>
   );

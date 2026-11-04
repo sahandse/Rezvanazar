@@ -10,13 +10,41 @@ interface CertificateParams {
 const WIDTH = 640;
 const HEIGHT = 420;
 
+const PAPER = "#fffdf6";
+const RULE = "rgba(61, 132, 198, 0.14)";
+const CRAYON = "#46372b";
+const RED = "#e8503f";
+const BLUE = "#3d84c6";
+const GREEN_INK = "#2f7d4a";
+const YELLOW = "#f7c948";
+const GOLD = "#f0a91c";
+const GOLD_OFF = "#e6dcc4";
+const TEXT = "#33291f";
+const TEXT_SOFT = "#6a5a48";
+const TEXT_MUTED = "#8b7c68";
+
 function starRating(percentage: number) {
   if (percentage >= 100) return 3;
   if (percentage >= 60) return 2;
   return 1;
 }
 
-export async function drawCertificate(canvas: HTMLCanvasElement, { name, seat, score, total, date, title = "کارت افتخار" }: CertificateParams) {
+// قاب کج، مثل خطی که بچه با مدادشمعی دور کاغذ می‌کشد
+function crayonFrame(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, seed: number) {
+  const offset = (i: number) => Math.sin(seed * 7 + i * 3.3) * 2.6;
+  ctx.beginPath();
+  ctx.moveTo(x + offset(0), y + offset(1));
+  ctx.lineTo(x + w + offset(2), y + offset(3));
+  ctx.lineTo(x + w + offset(4), y + h + offset(5));
+  ctx.lineTo(x + offset(6), y + h + offset(7));
+  ctx.closePath();
+  ctx.stroke();
+}
+
+export async function drawCertificate(
+  canvas: HTMLCanvasElement,
+  { name, seat, score, total, date, title = "کارت افتخار" }: CertificateParams
+) {
   if ("fonts" in document) {
     await document.fonts.ready;
   }
@@ -31,48 +59,59 @@ export async function drawCertificate(canvas: HTMLCanvasElement, { name, seat, s
   ctx.direction = "rtl";
   ctx.textAlign = "center";
 
-  ctx.fillStyle = "#fffaf0";
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-  ctx.strokeStyle = "#a9744a";
-  ctx.lineWidth = 6;
-  ctx.strokeRect(14, 14, WIDTH - 28, HEIGHT - 28);
-  ctx.strokeStyle = "#eadfc4";
-  ctx.lineWidth = 2;
-  ctx.strokeRect(26, 26, WIDTH - 52, HEIGHT - 52);
-
-  ctx.fillStyle = "#6b4a2f";
-  ctx.font = "20px Vazirmatn";
-  ctx.fillText("دبستان پسرانه تشیع ۲", WIDTH / 2, 70);
-
-  ctx.fillStyle = "#a9744a";
-  ctx.font = "bold 36px Vazirmatn";
-  ctx.fillText(title, WIDTH / 2, 120);
-
-  ctx.fillStyle = "#4a2f1c";
-  ctx.font = "bold 30px Vazirmatn";
-  ctx.fillText(name, WIDTH / 2, 190);
-
-  ctx.fillStyle = "#6b4a2f";
-  ctx.font = "18px Vazirmatn";
-  ctx.fillText(`صندلی ${seat}`, WIDTH / 2, 220);
-
-  ctx.fillStyle = "#2f6b41";
-  ctx.font = "bold 24px Vazirmatn";
-  ctx.fillText(`نمره: ${score} از ${total} (${percentage}٪)`, WIDTH / 2, 265);
-
-  const rating = starRating(percentage);
-  const starSpacing = 44;
-  const startX = WIDTH / 2 - starSpacing;
-  ctx.font = "34px Vazirmatn";
-  for (let i = 0; i < 3; i++) {
-    ctx.fillStyle = i < rating ? "#c9a15a" : "#e3d9c2";
-    ctx.fillText("★", startX + i * starSpacing, 320);
+  // خط‌های دفتر مشق
+  ctx.strokeStyle = RULE;
+  ctx.lineWidth = 1.5;
+  for (let y = 96; y < HEIGHT - 40; y += 34) {
+    ctx.beginPath();
+    ctx.moveTo(46, y);
+    ctx.lineTo(WIDTH - 46, y);
+    ctx.stroke();
   }
 
-  ctx.fillStyle = "#8a7a5f";
+  // قاب مدادشمعی: بیرونی جوهری، درونی ماژیک زرد
+  ctx.strokeStyle = CRAYON;
+  ctx.lineWidth = 6;
+  crayonFrame(ctx, 16, 16, WIDTH - 32, HEIGHT - 32, 1);
+  ctx.strokeStyle = YELLOW;
+  ctx.lineWidth = 4;
+  crayonFrame(ctx, 30, 30, WIDTH - 60, HEIGHT - 60, 2);
+
+  ctx.fillStyle = TEXT_SOFT;
+  ctx.font = "20px Vazirmatn";
+  ctx.fillText("دبستان پسرانه تشیع ۲", WIDTH / 2, 74);
+
+  ctx.fillStyle = RED;
+  ctx.font = "40px Lalezar, Vazirmatn";
+  ctx.fillText(title, WIDTH / 2, 128);
+
+  ctx.fillStyle = TEXT;
+  ctx.font = "bold 30px Vazirmatn";
+  ctx.fillText(name, WIDTH / 2, 192);
+
+  ctx.fillStyle = BLUE;
+  ctx.font = "18px Vazirmatn";
+  ctx.fillText(`صندلی ${seat}`, WIDTH / 2, 222);
+
+  ctx.fillStyle = GREEN_INK;
+  ctx.font = "bold 24px Vazirmatn";
+  ctx.fillText(`نمره: ${score} از ${total} (${percentage}٪)`, WIDTH / 2, 266);
+
+  const rating = starRating(percentage);
+  const starSpacing = 46;
+  const startX = WIDTH / 2 - starSpacing;
+  ctx.font = "36px Vazirmatn";
+  for (let i = 0; i < 3; i++) {
+    ctx.fillStyle = i < rating ? GOLD : GOLD_OFF;
+    ctx.fillText("★", startX + i * starSpacing, 322);
+  }
+
+  ctx.fillStyle = TEXT_MUTED;
   ctx.font = "16px Vazirmatn";
-  ctx.fillText(date, WIDTH / 2, 375);
+  ctx.fillText(date, WIDTH / 2, 372);
 }
 
 export function downloadCanvasAsPng(canvas: HTMLCanvasElement, filename: string) {

@@ -126,7 +126,8 @@ function App() {
   const appThemeStyle = appTheme
     ? ({
         "--team-primary": appTheme.primary,
-        "--team-secondary": appTheme.secondary,
+        "--team-ink": appTheme.ink,
+        "--team-soft": appTheme.soft,
       } as React.CSSProperties)
     : undefined;
 

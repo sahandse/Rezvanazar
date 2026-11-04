@@ -1,9 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { Exam } from "../data/exams";
 import type { Student } from "../types";
 import { playCorrectSound, playWrongSound } from "../sound";
 import { hasPersianVoice, speakPersian } from "../speech";
 import { downloadCanvasAsPng, drawCertificate } from "../certificate";
+
+const OPTION_KEYS = ["آ", "ب", "پ", "ت", "ث"];
+const OPTION_KEY_COLORS = [
+  "var(--red-ink)",
+  "var(--blue-ink)",
+  "var(--green-ink)",
+  "var(--orange-ink)",
+  "var(--purple-ink)",
+];
 
 interface HomeworkProps {
   student: Student;
@@ -141,9 +150,22 @@ export default function Homework({ student, exam, onComplete, onExit }: Homework
               if (index === question.correctIndex) cls += " option--correct";
               else if (index === selected) cls += " option--wrong";
             }
+            const isCorrect = selected !== null && index === question.correctIndex;
+            const isSelected = selected !== null && index === selected;
             return (
-              <button key={index} className={cls} onClick={() => handleAnswer(index)} disabled={selected !== null}>
-                {option}
+              <button
+                key={index}
+                className={cls}
+                onClick={() => handleAnswer(index)}
+                disabled={selected !== null}
+                style={{ "--key-color": OPTION_KEY_COLORS[index % OPTION_KEY_COLORS.length] } as CSSProperties}
+              >
+                <span className="option__key" aria-hidden="true">
+                  {OPTION_KEYS[index % OPTION_KEYS.length]}
+                </span>
+                <span>{option}</span>
+                {isCorrect && <span className="option__mark" aria-hidden="true">✓</span>}
+                {isSelected && !isCorrect && <span className="option__mark" aria-hidden="true">✕</span>}
               </button>
             );
           })}

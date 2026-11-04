@@ -19,8 +19,8 @@ export default defineConfig({
         start_url: '/Rezvanazar/',
         scope: '/Rezvanazar/',
         display: 'standalone',
-        background_color: '#f3e3c3',
-        theme_color: '#a9744a',
+        background_color: '#fdf3dd',
+        theme_color: '#2f6b4f',
         icons: [
           { src: 'pwa-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'pwa-512.png', sizes: '512x512', type: 'image/png' },
