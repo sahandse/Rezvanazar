@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import Landing from "./components/Landing";
 import Classroom from "./components/Classroom";
 import LoginModal from "./components/LoginModal";
 import TeamPicker from "./components/TeamPicker";
@@ -46,6 +47,7 @@ function loadTeamChoices(): TeamChoices {
 }
 
 function App() {
+  const [showLanding, setShowLanding] = useState(true);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const [session, setSession] = useState<Student | null>(null);
   const [view, setView] = useState<View>("welcome");
@@ -131,11 +133,13 @@ function App() {
   return (
     <div className="app" style={appThemeStyle}>
       <header className="app__header">
-        <h1>دبستان پسرانه تشیع ۲</h1>
+        <h1>آکادمی قهرمانان علوم</h1>
         <p>پایه سوم ابتدایی — آموزگار و طراح: آیدا رضوان‌آذر</p>
       </header>
 
-      {!session && (
+      {!session && showLanding && <Landing onStart={() => setShowLanding(false)} />}
+
+      {!session && !showLanding && (
         <Classroom
           students={students}
           completedSeats={completedSeats}
