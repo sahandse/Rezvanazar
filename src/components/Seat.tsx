@@ -1,3 +1,4 @@
+import { fa } from "../format";
 import type { Team } from "../data/teams";
 import type { Student } from "../types";
 
@@ -15,9 +16,9 @@ export default function Seat({ student, completed, team, onClick }: SeatProps) {
     <button
       className={`seat${completed ? " seat--done" : ""}`}
       onClick={() => onClick(student)}
-      aria-label={`میز ${student.seat} — ${student.name}`}
+      aria-label={`میز ${fa(student.seat)} — ${student.name}`}
     >
-      <span className="seat__number">{student.seat}</span>
+      <span className="seat__number">{fa(student.seat)}</span>
       {team && (
         <span className="seat__team" aria-hidden="true" title={team.name}>
           {team.emoji}

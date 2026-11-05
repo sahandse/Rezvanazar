@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { fa } from "../format";
+import type { Team } from "../data/teams";
 import type { Exam } from "../data/exams";
 import type { Student } from "../types";
 import { playCorrectSound, playWrongSound } from "../sound";
@@ -17,11 +19,12 @@ const OPTION_KEY_COLORS = [
 interface HomeworkProps {
   student: Student;
   exam: Exam;
+  team?: Team;
   onComplete: (score: number, total: number) => void;
   onExit: () => void;
 }
 
-export default function Homework({ student, exam, onComplete, onExit }: HomeworkProps) {
+export default function Homework({ student, exam, team, onComplete, onExit }: HomeworkProps) {
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -85,13 +88,19 @@ export default function Homework({ student, exam, onComplete, onExit }: Homework
     return (
       <div className="homework">
         <div className="homework__card homework__card--result">
-          <h2>آفرین، {student.name}! 🎉</h2>
+          <span className="result__flag" aria-hidden="true">
+            {team ? team.emoji : "🎈"}
+          </span>
+          <h2 className="result__cheer">{team ? team.cheer : "آفرین!"}</h2>
+          <p className="result__name">آفرین، {student.name}!</p>
           <p className="homework__subtitle">{exam.title}</p>
           <p className="homework__score">
-            امتیاز شما: {score} از {total}
+            امتیاز شما: {fa(score)} از {fa(total)}
           </p>
-          <p>این آزمون با موفقیت انجام شد.</p>
-          <canvas ref={certificateRef} className="certificate" />
+          <p className="result__note">این آزمون با موفقیت انجام شد.</p>
+          <div className="result__certificate">
+            <canvas ref={certificateRef} className="certificate" />
+          </div>
           <div className="homework__actions homework__actions--result">
             <button className="btn btn--ghost" onClick={handleDownloadCertificate} disabled={!certificateReady}>
               {certificateReady ? "دانلود کارت افتخار" : "در حال آماده کردن کارت..."}
@@ -110,10 +119,10 @@ export default function Homework({ student, exam, onComplete, onExit }: Homework
       <div className="homework__card">
         <div className="homework__header">
           <span>
-            {student.name} — صندلی {student.seat}
+            {student.name} — صندلی {fa(student.seat)}
           </span>
           <span>
-            سوال {step + 1} از {total}
+            سوال {fa(step + 1)} از {fa(total)}
           </span>
         </div>
 

@@ -3,7 +3,10 @@ export interface Team {
   name: string;
   emoji: string;
   badge: string;
+  // شعار تیم، فقط برای نمایش
   motto: string;
+  // جملهٔ تشویق صفحهٔ نتیجه — با تیمی که بچه انتخاب کرده فرق می‌کند
+  cheer: string;
   // شماره پیراهن تیم — فقط برای نمایش در تم فوتبالی پروفایل
   number: string;
   // رنگ اصلی تیم برای قاب و برچسب‌ها
@@ -23,6 +26,7 @@ export const teams: Team[] = [
     emoji: "⚽",
     badge: asset("team-messi.svg"),
     motto: "آرام بازی کن، دقیق گل بزن",
+    cheer: "گل زدی!",
     number: "۱۰",
     primary: "#3d84c6",
     ink: "#27639b",
@@ -34,6 +38,7 @@ export const teams: Team[] = [
     emoji: "🎯",
     badge: asset("team-ronaldo.svg"),
     motto: "تمرین زیاد، گل زیاد",
+    cheer: "تمرینت جواب داد!",
     number: "۷",
     primary: "#e8503f",
     ink: "#b8301f",
@@ -45,6 +50,7 @@ export const teams: Team[] = [
     emoji: "⚡",
     badge: asset("team-haaland.svg"),
     motto: "سریع بدو، قوی شوت بزن",
+    cheer: "مثل موشک بودی!",
     number: "۹",
     primary: "#f0a91c",
     ink: "#a06a05",
@@ -56,6 +62,7 @@ export const teams: Team[] = [
     emoji: "🪄",
     badge: asset("team-harry.svg"),
     motto: "کتاب خواندن جادوی واقعی است",
+    cheer: "جادو کردی!",
     number: "۱۱",
     primary: "#8e6bb5",
     ink: "#6b4a92",

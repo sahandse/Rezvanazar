@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { fa } from "../format";
 import type { Team } from "../data/teams";
 import { exams, isExamLocked, type Exam } from "../data/exams";
 import type { ActivityEntry, Student } from "../types";
@@ -59,12 +60,13 @@ export default function Profile({
             <span className="profile__badge">کارت دانش‌آموزی</span>
             <h2 className="profile__name">{student.name}</h2>
             <p className="profile__meta">
-              صندلی {student.seat} — نام‌کاربری: {student.username}
+              صندلی {fa(student.seat)} — نام‌کاربری: {student.username}
             </p>
             {team && (
               <p className="profile__team">
                 {team.emoji} {team.name}
                 <span className="profile__jersey">پیراهن شماره {team.number}</span>
+                <span className="profile__mine">⭐ تیم من</span>
               </p>
             )}
             {team && <p className="profile__motto">«{team.motto}»</p>}
@@ -102,6 +104,7 @@ export default function Profile({
               }${isDone ? " exam-card--done" : ""}`}
               onClick={() => (locked ? handleLockedClick(exam.id) : onStartExam(exam))}
             >
+              {locked && <span className="exam-card__stamp" aria-hidden="true">زنگ بعد</span>}
               <span className="exam-card__icon">{locked ? "🔒" : isDone ? "✅" : "📝"}</span>
               <span className="exam-card__title">{exam.title}</span>
               <span className="exam-card__desc">

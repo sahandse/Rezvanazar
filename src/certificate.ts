@@ -1,3 +1,5 @@
+import { fa } from "./format";
+
 interface CertificateParams {
   name: string;
   seat: number;
@@ -39,6 +41,21 @@ function crayonFrame(ctx: CanvasRenderingContext2D, x: number, y: number, w: num
   ctx.lineTo(x + offset(6), y + h + offset(7));
   ctx.closePath();
   ctx.stroke();
+}
+
+// ستارهٔ پنج‌پر که بچه با مدادشمعی می‌کشد: اضلاع کمی لنگ می‌زنند
+function crayonStar(ctx: CanvasRenderingContext2D, cx: number, cy: number, radius: number, seed: number) {
+  ctx.beginPath();
+  for (let i = 0; i < 10; i++) {
+    const wobble = 1 + Math.sin(seed * 5 + i * 2.1) * 0.09;
+    const r = (i % 2 === 0 ? radius : radius * 0.45) * wobble;
+    const angle = -Math.PI / 2 + (i * Math.PI) / 5;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
 }
 
 export async function drawCertificate(
@@ -94,19 +111,24 @@ export async function drawCertificate(
 
   ctx.fillStyle = BLUE;
   ctx.font = "18px Vazirmatn";
-  ctx.fillText(`صندلی ${seat}`, WIDTH / 2, 222);
+  ctx.fillText(`صندلی ${fa(seat)}`, WIDTH / 2, 222);
 
   ctx.fillStyle = GREEN_INK;
   ctx.font = "bold 24px Vazirmatn";
-  ctx.fillText(`نمره: ${score} از ${total} (${percentage}٪)`, WIDTH / 2, 266);
+  ctx.fillText(`نمره: ${fa(score)} از ${fa(total)} (${fa(percentage)}٪)`, WIDTH / 2, 266);
 
   const rating = starRating(percentage);
-  const starSpacing = 46;
+  const starSpacing = 54;
   const startX = WIDTH / 2 - starSpacing;
-  ctx.font = "36px Vazirmatn";
   for (let i = 0; i < 3; i++) {
-    ctx.fillStyle = i < rating ? GOLD : GOLD_OFF;
-    ctx.fillText("★", startX + i * starSpacing, 322);
+    const earned = i < rating;
+    crayonStar(ctx, startX + i * starSpacing, 314, 21, i + 1);
+    ctx.fillStyle = earned ? GOLD : GOLD_OFF;
+    ctx.fill();
+    ctx.strokeStyle = earned ? "#a06a05" : "#c3b795";
+    ctx.lineWidth = 3.5;
+    ctx.lineJoin = "round";
+    ctx.stroke();
   }
 
   ctx.fillStyle = TEXT_MUTED;

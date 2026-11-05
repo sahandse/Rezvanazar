@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { fa } from "../format";
 import type { Student } from "../types";
 
 interface LoginModalProps {
@@ -39,7 +40,7 @@ export default function LoginModal({ student, onClose, onSuccess }: LoginModalPr
         <div className="modal__banner">
           <h2 className="modal__title">ورود به کلاس</h2>
           <p className="modal__subtitle">
-            صندلی {student.seat} — {student.name}
+            صندلی {fa(student.seat)} — {student.name}
           </p>
         </div>
         <div className="modal__body">

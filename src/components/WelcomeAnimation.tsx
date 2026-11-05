@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { fa } from "../format";
 import type { Student } from "../types";
 import type { Team } from "../data/teams";
 
@@ -55,7 +56,7 @@ export default function WelcomeAnimation({ student, team, onDone }: WelcomeAnima
         <p className="welcome__emoji">{team ? `${team.emoji} 🎉` : "🎉"}</p>
         <h2>خوش اومدی، {student.name}!</h2>
         <p>
-          صندلی {student.seat}
+          صندلی {fa(student.seat)}
           {team ? ` — تیم ${team.name}` : " — بریم سراغ پروفایلت"}
         </p>
       </div>
