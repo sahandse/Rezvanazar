@@ -11,7 +11,7 @@ export default function TeamPicker({ student, onChoose }: TeamPickerProps) {
   return (
     <div className="team-picker taped">
       <h2 className="team-picker__title">تیمت رو انتخاب کن، {student.name}!</h2>
-      <p className="team-picker__subtitle">رنگ تیمت، میز و کارت دانش‌آموزیت رو تو کلاس قشنگ می‌کنه</p>
+      <p className="team-picker__subtitle">شماره پیراهنت رو بردار؛ رنگ تیمت میز و کارت دانش‌آموزیت رو قشنگ می‌کنه</p>
       <div className="team-picker__grid">
         {teams.map((team) => (
           <button
@@ -26,6 +26,7 @@ export default function TeamPicker({ student, onChoose }: TeamPickerProps) {
             }
             onClick={() => onChoose(team.id)}
           >
+            <span className="team-card__jersey">شماره {team.number}</span>
             <img
               className="team-card__badge"
               src={team.badge}

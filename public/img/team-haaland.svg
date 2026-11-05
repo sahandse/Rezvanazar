@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="نشان تیم هالند">
+  <defs>
+    <filter id="crayon" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018 0.026" numOctaves="3" seed="19" result="n" />
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <clipPath id="shirt">
+      <path d="M120 40 L96 36 C78 42 64 56 56 74 L34 98 C30 108 36 118 46 118 L60 112 L58 186 C58 196 66 202 76 202 L164 202 C174 202 182 196 182 186 L180 112 L194 118 C204 118 210 108 206 98 L184 74 C176 56 162 42 144 36 Z" />
+    </clipPath>
+  </defs>
+
+  <g filter="url(#crayon)" transform="translate(17 17) scale(0.86)">
+    <g clip-path="url(#shirt)">
+      <rect x="30" y="30" width="180" height="180" fill="#f7c948" />
+      <path d="M30 130 L210 130" stroke="#46372b" stroke-width="14" opacity="0.85" />
+      <path d="M30 60 L210 60" stroke="#46372b" stroke-width="10" opacity="0.5" />
+    </g>
+    <path d="M120 40 L96 36 C78 42 64 56 56 74 L34 98 C30 108 36 118 46 118 L60 112 L58 186 C58 196 66 202 76 202 L164 202 C174 202 182 196 182 186 L180 112 L194 118 C204 118 210 108 206 98 L184 74 C176 56 162 42 144 36 Z"
+      fill="none" stroke="#46372b" stroke-width="7" stroke-linejoin="round" />
+    <path d="M100 38 C108 52 132 52 140 38" fill="none" stroke="#46372b" stroke-width="6" stroke-linecap="round" />
+    <!-- خط سرعت -->
+    <path d="M64 158 H176 M74 174 H166" fill="none" stroke="#a06a05" stroke-width="6" stroke-linecap="round" opacity="0.7" />
+    <circle cx="120" cy="212" r="20" fill="#fffdf6" stroke="#46372b" stroke-width="6" />
+    <path d="M120 202 l9 6 -3 11 h-12 l-3 -11 Z" fill="#46372b" />
+    <path d="M196 48 l4 9 9 1 -7 7 2 10 -8 -5 -8 5 2 -10 -7 -7 9 -1 Z" fill="#e8503f" stroke="#46372b" stroke-width="3" />
+  </g>
+</svg>

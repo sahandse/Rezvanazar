@@ -36,34 +36,45 @@ export default function Profile({
           خروج به کلاس
         </button>
       </div>
-      <div className="profile__header">
-        <div className="profile__avatar">
-          {student.name.charAt(0)}
-          {team && (
-            <img
-              className="profile__team-sticker"
-              src={team.badge}
-              alt={`نشان ${team.name}`}
-              width={36}
-              height={36}
-            />
-          )}
-        </div>
-        <div>
-          <span className="profile__badge">کارت دانش‌آموزی</span>
-          <h2 className="profile__name">{student.name}</h2>
-          <p className="profile__meta">
-            صندلی {student.seat} — نام‌کاربری: {student.username}
-          </p>
-          {team && (
-            <p className="profile__team">
-              {team.emoji} {team.name}
+      <div className="profile__pitch">
+        <div className="profile__header">
+          <div className="profile__avatar">
+            {student.name.charAt(0)}
+            {team && (
+              <>
+                <span className="profile__number" aria-hidden>
+                  {team.number}
+                </span>
+                <img
+                  className="profile__team-sticker"
+                  src={team.badge}
+                  alt={`نشان ${team.name}`}
+                  width={36}
+                  height={36}
+                />
+              </>
+            )}
+          </div>
+          <div>
+            <span className="profile__badge">کارت دانش‌آموزی</span>
+            <h2 className="profile__name">{student.name}</h2>
+            <p className="profile__meta">
+              صندلی {student.seat} — نام‌کاربری: {student.username}
             </p>
-          )}
+            {team && (
+              <p className="profile__team">
+                {team.emoji} {team.name}
+                <span className="profile__jersey">پیراهن شماره {team.number}</span>
+              </p>
+            )}
+            {team && <p className="profile__motto">«{team.motto}»</p>}
+          </div>
+          {team && <img className="profile__crest" src={team.badge} alt="" aria-hidden width={118} height={118} />}
         </div>
       </div>
 
       <h3 className="profile__section-title">فعالیت‌های من</h3>
+      <p className="profile__hint">هر فعالیت یک بازی است؛ تمامش کن و برچسب بگیر 🏅</p>
       <div className="profile__exams">
         {exams.map((exam) => {
           const isDone = Boolean(seatResults?.[exam.id]);

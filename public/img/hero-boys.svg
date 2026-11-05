@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675" role="img" aria-label="چهار پسر دانش‌آموز کلاس سوم با توپ فوتبال و دفتر مشق">
+  <defs>
+    <filter id="crayon" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="3" seed="9" result="n" />
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <pattern id="rules" width="30" height="34" patternUnits="userSpaceOnUse">
+      <path d="M0 33.5 H30" stroke="#3d84c6" stroke-width="1.8" opacity="0.25" />
+    </pattern>
+    <symbol id="star" viewBox="0 0 24 24">
+      <path d="M12 2 l3 7 7 .8 -5.4 4.6 1.7 7 -6.3 -3.8 -6.3 3.8 1.7 -7 -5.4 -4.6 7 -.8 Z" stroke="#46372b" stroke-width="2" />
+    </symbol>
+  </defs>
+
+  <!-- کاغذ دفتر -->
+  <rect width="900" height="675" fill="#fdf3dd" />
+  <rect width="900" height="675" fill="url(#rules)" />
+  <path d="M842 0 V675" stroke="#e8503f" stroke-width="3" opacity="0.45" />
+
+  <g filter="url(#crayon)">
+    <!-- دروازهٔ فوتبال در پس‌زمینه -->
+    <g stroke="#46372b" fill="none" stroke-width="9" stroke-linecap="round">
+      <path d="M70 250 V560 M330 250 V560 M62 258 H338" />
+    </g>
+    <g stroke="#27639b" stroke-width="3" opacity="0.35">
+      <path d="M105 262 V556 M140 262 V556 M175 262 V556 M210 262 V556 M245 262 V556 M280 262 V556" />
+      <path d="M74 300 H334 M74 340 H334 M74 380 H334 M74 420 H334 M74 460 H334 M74 500 H334 M74 540 H334" />
+    </g>
+
+    <!-- چمن -->
+    <path d="M0 566 C150 552 300 578 450 562 C600 548 750 576 900 560 L900 675 L0 675 Z" fill="#4aa867" opacity="0.55" />
+    <g stroke="#2f7d4a" stroke-width="6" stroke-linecap="round" opacity="0.8">
+      <path d="M40 600 l6 -22 M60 604 l4 -20 M120 612 l6 -22 M200 596 l4 -20 M262 606 l6 -22 M420 600 l4 -20 M478 610 l6 -22 M640 598 l4 -20 M700 608 l6 -22 M820 600 l4 -20 M862 610 l6 -22" />
+    </g>
+
+    <!-- ریوس‌های کلاس -->
+    <path d="M0 60 C150 96 300 40 450 76 C600 112 750 52 900 84" fill="none" stroke="#46372b" stroke-width="6" />
+    <g stroke="#46372b" stroke-width="4">
+      <path d="M96 74 l22 44 22 -44 Z" fill="#e8503f" />
+      <path d="M236 82 l22 44 22 -44 Z" fill="#3d84c6" />
+      <path d="M386 74 l22 44 22 -44 Z" fill="#f7c948" />
+      <path d="M536 88 l22 44 22 -44 Z" fill="#8e6bb5" />
+      <path d="M686 76 l22 44 22 -44 Z" fill="#4aa867" />
+      <path d="M816 70 l22 44 22 -44 Z" fill="#f0951c" />
+    </g>
+
+    <!-- خورشید مدادشمعی -->
+    <g>
+      <circle cx="800" cy="196" r="44" fill="#f7c948" stroke="#46372b" stroke-width="7" />
+      <g stroke="#f0951c" stroke-width="8" stroke-linecap="round">
+        <path d="M800 132 V108 M800 260 V284 M736 196 H712 M864 196 H888 M755 151 l-17 -17 M845 241 l17 17 M845 151 l17 -17 M755 241 l-17 17" />
+      </g>
+    </g>
+
+    <!-- ================= پسر ۱: دست تکان می‌دهد ================= -->
+    <g transform="translate(150 4) rotate(-2 0 500)">
+      <rect x="-70" y="406" width="32" height="74" rx="12" fill="#e8503f" stroke="#46372b" stroke-width="5" />
+      <ellipse cx="-20" cy="616" rx="24" ry="13" fill="#3b3730" stroke="#46372b" stroke-width="5" />
+      <ellipse cx="20" cy="616" rx="24" ry="13" fill="#3b3730" stroke="#46372b" stroke-width="5" />
+      <rect x="-28" y="540" width="22" height="74" rx="10" fill="#e0a97c" stroke="#46372b" stroke-width="5" />
+      <rect x="6" y="540" width="22" height="74" rx="10" fill="#e0a97c" stroke="#46372b" stroke-width="5" />
+      <rect x="-42" y="486" width="84" height="62" rx="14" fill="#23406b" stroke="#46372b" stroke-width="5" />
+      <path d="M0 500 V546" stroke="#46372b" stroke-width="4" opacity="0.6" />
+      <path d="M-46 404 C-46 390 -30 382 0 382 C30 382 46 390 46 404 L50 494 C50 502 42 506 32 506 L-32 506 C-42 506 -50 502 -50 494 Z" fill="#fffdf6" stroke="#46372b" stroke-width="6" />
+      <path d="M-16 384 L0 402 L16 384" fill="none" stroke="#46372b" stroke-width="5" />
+      <path d="M44 412 C64 428 68 456 62 480" fill="none" stroke="#e0a97c" stroke-width="17" stroke-linecap="round" />
+      <path d="M-44 408 C-70 372 -78 330 -68 300" fill="none" stroke="#e0a97c" stroke-width="17" stroke-linecap="round" />
+      <circle cx="-68" cy="296" r="15" fill="#e0a97c" stroke="#46372b" stroke-width="5" />
+      <circle cx="0" cy="330" r="49" fill="#e0a97c" stroke="#46372b" stroke-width="6" />
+      <path d="M-49 320 C-46 280 -20 266 2 268 C28 270 49 286 49 324 C34 302 18 296 -2 298 C-22 300 -38 306 -49 320 Z" fill="#3b2a1e" stroke="#46372b" stroke-width="5" />
+      <circle cx="-16" cy="334" r="5.5" fill="#46372b" />
+      <circle cx="16" cy="334" r="5.5" fill="#46372b" />
+      <path d="M-16 352 C-6 366 6 366 16 352" fill="none" stroke="#46372b" stroke-width="5" stroke-linecap="round" />
+      <circle cx="-30" cy="348" r="8" fill="#e8503f" opacity="0.35" />
+      <circle cx="30" cy="348" r="8" fill="#e8503f" opacity="0.35" />
+    </g>
+
+    <!-- ================= پسر ۲: توپ بغل ================= -->
+    <g transform="translate(350 10) rotate(1.5 0 500)">
+      <rect x="40" y="404" width="32" height="74" rx="12" fill="#3d84c6" stroke="#46372b" stroke-width="5" />
+      <ellipse cx="-20" cy="616" rx="24" ry="13" fill="#3b3730" stroke="#46372b" stroke-width="5" />
+      <ellipse cx="20" cy="616" rx="24" ry="13" fill="#3b3730" stroke="#46372b" stroke-width="5" />
+      <rect x="-28" y="540" width="22" height="74" rx="10" fill="#f6d3ae" stroke="#46372b" stroke-width="5" />
+      <rect x="6" y="540" width="22" height="74" rx="10" fill="#f6d3ae" stroke="#46372b" stroke-width="5" />
+      <rect x="-42" y="486" width="84" height="62" rx="14" fill="#23406b" stroke="#46372b" stroke-width="5" />
+      <path d="M0 500 V546" stroke="#46372b" stroke-width="4" opacity="0.6" />
+      <path d="M-46 404 C-46 390 -30 382 0 382 C30 382 46 390 46 404 L50 494 C50 502 42 506 32 506 L-32 506 C-42 506 -50 502 -50 494 Z" fill="#fffdf6" stroke="#46372b" stroke-width="6" />
+      <path d="M-16 384 L0 402 L16 384" fill="none" stroke="#46372b" stroke-width="5" />
+      <path d="M-46 418 C-60 442 -54 466 -30 472 M46 418 C60 442 54 462 40 468" fill="none" stroke="#f6d3ae" stroke-width="17" stroke-linecap="round" />
+      <circle cx="24" cy="466" r="28" fill="#fffdf6" stroke="#46372b" stroke-width="6" />
+      <path d="M24 452 l11 8 -4 14 h-14 l-4 -14 Z" fill="#46372b" />
+      <circle cx="0" cy="330" r="49" fill="#f6d3ae" stroke="#46372b" stroke-width="6" />
+      <path d="M-49 322 C-44 276 -14 264 6 268 C32 272 49 292 48 326 C40 300 16 292 -6 296 C-28 300 -42 310 -49 322 Z" fill="#55381f" stroke="#46372b" stroke-width="5" />
+      <circle cx="-16" cy="334" r="5.5" fill="#46372b" />
+      <circle cx="16" cy="334" r="5.5" fill="#46372b" />
+      <path d="M-14 354 C-4 364 8 364 18 352" fill="none" stroke="#46372b" stroke-width="5" stroke-linecap="round" />
+      <circle cx="-30" cy="348" r="8" fill="#e8503f" opacity="0.35" />
+      <circle cx="30" cy="348" r="8" fill="#e8503f" opacity="0.35" />
+    </g>
+
+    <!-- ================= پسر ۳: دفتر و مداد ================= -->
+    <g transform="translate(556 2) rotate(-1 0 500)">
+      <rect x="-70" y="406" width="32" height="74" rx="12" fill="#4aa867" stroke="#46372b" stroke-width="5" />
+      <ellipse cx="-20" cy="616" rx="24" ry="13" fill="#3b3730" stroke="#46372b" stroke-width="5" />
+      <ellipse cx="20" cy="616" rx="24" ry="13" fill="#3b3730" stroke="#46372b" stroke-width="5" />
+      <rect x="-28" y="540" width="22" height="74" rx="10" fill="#c98a5f" stroke="#46372b" stroke-width="5" />
+      <rect x="6" y="540" width="22" height="74" rx="10" fill="#c98a5f" stroke="#46372b" stroke-width="5" />
+      <rect x="-42" y="486" width="84" height="62" rx="14" fill="#23406b" stroke="#46372b" stroke-width="5" />
+      <path d="M0 500 V546" stroke="#46372b" stroke-width="4" opacity="0.6" />
+      <path d="M-46 404 C-46 390 -30 382 0 382 C30 382 46 390 46 404 L50 494 C50 502 42 506 32 506 L-32 506 C-42 506 -50 502 -50 494 Z" fill="#fffdf6" stroke="#46372b" stroke-width="6" />
+      <path d="M-16 384 L0 402 L16 384" fill="none" stroke="#46372b" stroke-width="5" />
+      <path d="M44 414 C62 436 60 464 44 478" fill="none" stroke="#c98a5f" stroke-width="17" stroke-linecap="round" />
+      <path d="M-44 414 C-62 440 -56 468 -34 476" fill="none" stroke="#c98a5f" stroke-width="17" stroke-linecap="round" />
+      <!-- دفتر مشق -->
+      <g transform="rotate(-8 -6 492)">
+        <rect x="-52" y="452" width="94" height="72" rx="8" fill="#fffdf6" stroke="#46372b" stroke-width="6" />
+        <path d="M-44 474 H34 M-44 492 H34 M-44 510 H20" stroke="#3d84c6" stroke-width="3" opacity="0.6" />
+        <path d="M-52 452 V524" stroke="#e8503f" stroke-width="6" />
+      </g>
+      <path d="M40 470 L74 436" stroke="#f0951c" stroke-width="10" stroke-linecap="round" />
+      <path d="M74 436 l10 -10 6 6 -10 10 Z" fill="#46372b" />
+      <circle cx="0" cy="330" r="49" fill="#c98a5f" stroke="#46372b" stroke-width="6" />
+      <path d="M-49 318 C-48 278 -22 262 0 264 C26 266 48 282 49 320 C38 296 20 288 0 290 C-22 292 -38 302 -49 318 Z" fill="#2b2018" stroke="#46372b" stroke-width="5" />
+      <circle cx="-16" cy="334" r="5.5" fill="#46372b" />
+      <circle cx="16" cy="334" r="5.5" fill="#46372b" />
+      <path d="M-16 352 C-6 364 6 364 16 352" fill="none" stroke="#46372b" stroke-width="5" stroke-linecap="round" />
+      <circle cx="-30" cy="348" r="8" fill="#e8503f" opacity="0.35" />
+      <circle cx="30" cy="348" r="8" fill="#e8503f" opacity="0.35" />
+    </g>
+
+    <!-- ================= پسر ۴: دست‌ها بالا، کوله‌پشتی ================= -->
+    <g transform="translate(752 12) rotate(2 0 500)">
+      <rect x="42" y="404" width="34" height="76" rx="12" fill="#f0951c" stroke="#46372b" stroke-width="5" />
+      <ellipse cx="-20" cy="616" rx="24" ry="13" fill="#3b3730" stroke="#46372b" stroke-width="5" />
+      <ellipse cx="20" cy="616" rx="24" ry="13" fill="#3b3730" stroke="#46372b" stroke-width="5" />
+      <rect x="-28" y="540" width="22" height="74" rx="10" fill="#eec49a" stroke="#46372b" stroke-width="5" />
+      <rect x="6" y="540" width="22" height="74" rx="10" fill="#eec49a" stroke="#46372b" stroke-width="5" />
+      <rect x="-42" y="486" width="84" height="62" rx="14" fill="#23406b" stroke="#46372b" stroke-width="5" />
+      <path d="M0 500 V546" stroke="#46372b" stroke-width="4" opacity="0.6" />
+      <path d="M-46 404 C-46 390 -30 382 0 382 C30 382 46 390 46 404 L50 494 C50 502 42 506 32 506 L-32 506 C-42 506 -50 502 -50 494 Z" fill="#dfeaf6" stroke="#46372b" stroke-width="6" />
+      <path d="M-16 384 L0 402 L16 384" fill="none" stroke="#46372b" stroke-width="5" />
+      <path d="M-44 408 C-74 380 -86 336 -86 300 M44 408 C74 380 86 336 86 300" fill="none" stroke="#eec49a" stroke-width="17" stroke-linecap="round" />
+      <circle cx="-86" cy="296" r="15" fill="#eec49a" stroke="#46372b" stroke-width="5" />
+      <circle cx="86" cy="296" r="15" fill="#eec49a" stroke="#46372b" stroke-width="5" />
+      <circle cx="0" cy="330" r="49" fill="#eec49a" stroke="#46372b" stroke-width="6" />
+      <path d="M-48 324 C-52 282 -24 262 0 264 C28 266 52 284 48 326 C44 300 26 292 6 296 C-18 300 -40 306 -48 324 Z" fill="#6b4423" stroke="#46372b" stroke-width="5" />
+      <path d="M-30 292 C-22 282 -8 280 0 286" fill="none" stroke="#6b4423" stroke-width="8" stroke-linecap="round" />
+      <circle cx="-16" cy="334" r="5.5" fill="#46372b" />
+      <circle cx="16" cy="334" r="5.5" fill="#46372b" />
+      <path d="M-18 350 C-8 368 8 368 18 350" fill="none" stroke="#46372b" stroke-width="5" stroke-linecap="round" />
+      <circle cx="-30" cy="348" r="8" fill="#e8503f" opacity="0.35" />
+      <circle cx="30" cy="348" r="8" fill="#e8503f" opacity="0.35" />
+    </g>
+
+    <!-- ستاره‌های پراکنده -->
+    <g fill="#f7c948">
+      <use href="#star" x="60" y="120" width="34" height="34" />
+      <use href="#star" x="470" y="150" width="26" height="26" />
+      <use href="#star" x="640" y="120" width="30" height="30" />
+      <use href="#star" x="250" y="200" width="22" height="22" />
+      <use href="#star" x="860" y="330" width="28" height="28" />
+      <use href="#star" x="26" y="330" width="26" height="26" />
+    </g>
+    <!-- منگنه‌های کاغذ -->
+    <g fill="none" stroke="#8e6bb5" stroke-width="7" stroke-linecap="round">
+      <path d="M420 240 v-34 a12 12 0 0 1 24 0 v40" />
+      <path d="M560 190 v-30 a11 11 0 0 1 22 0 v36" />
+    </g>
+  </g>
+</svg>
