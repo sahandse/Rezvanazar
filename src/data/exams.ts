@@ -1,6 +1,4 @@
 import type { Question } from "../types";
-import { statesOfMatterQuestions } from "./activities";
-import { homeworkQuestions } from "./homework";
 
 export interface Exam {
   id: number;
@@ -12,53 +10,11 @@ export interface Exam {
   activityUrl?: string;
 }
 
-// برای اضافه کردن سؤالات یک آزمون، فهرست questions آن را پر کنید. هر سؤال:
-// { id: 1, question: "…", options: ["…", "…", "…", "…"], correctIndex: 0 }
-// correctIndex شمارهٔ گزینهٔ درست در آرایهٔ options است (از صفر شروع می‌شود).
-// آزمون‌هایی که سؤال ندارند در پروفایل قفل نشان داده می‌شوند.
+// فهرست تکالیف = فقط فعالیت‌هایی که نشانی‌شان را آموزگار فرستاده است.
+// برای افزودن آزمون داخلی، یک مورد با activityType: "homework" و فهرست
+// questions به همین آرایه اضافه کنید (id را عوض نکنید؛ نتایج به صندلی
+// و id آزمون ذخیره شده‌اند).
 export const exams: Exam[] = [
-  {
-    id: 1,
-    title: "تکلیف تعاملی هفتگی",
-    description: "یک آزمون کوتاه ریاضی و عمومی",
-    activityType: "homework",
-    questions: homeworkQuestions,
-  },
-  {
-    id: 2,
-    title: "آزمون ریاضی",
-    description: "آزمون ریاضی پایه سوم",
-    activityType: "homework",
-    questions: [],
-  },
-  {
-    id: 3,
-    title: "آزمون علوم",
-    description: "آزمون علوم پایه سوم",
-    activityType: "homework",
-    questions: statesOfMatterQuestions,
-  },
-  {
-    id: 4,
-    title: "آزمون ادبیات فارسی",
-    description: "آزمون ادبیات فارسی پایه سوم",
-    activityType: "homework",
-    questions: [],
-  },
-  {
-    id: 5,
-    title: "آزمون تاریخ",
-    description: "آزمون تاریخ پایه سوم",
-    activityType: "homework",
-    questions: [],
-  },
-  {
-    id: 6,
-    title: "آزمون جغرافیا",
-    description: "آزمون جغرافیا پایه سوم",
-    activityType: "homework",
-    questions: [],
-  },
   {
     id: 7,
     title: "فعالیت سوم: جامد، مایع، گاز",
