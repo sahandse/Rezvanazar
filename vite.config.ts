@@ -3,8 +3,19 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
+// نشان زمان build از سمت GitHub Actions: به معلم و دانش‌آموز نشان می‌دهد
+// نسخه‌ای که می‌بیند واقعاً newest است یا از کش آفلاین می‌آید.
+const buildStamp = new Intl.DateTimeFormat('fa-IR', {
+  dateStyle: 'short',
+  timeStyle: 'short',
+  timeZone: 'Asia/Tehran',
+}).format(new Date())
+
 export default defineConfig({
   base: '/Rezvanazar/',
+  define: {
+    __APP_BUILD__: JSON.stringify(buildStamp),
+  },
   plugins: [
     react(),
     VitePWA({

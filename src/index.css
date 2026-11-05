@@ -172,6 +172,22 @@ img {
   color: var(--ink-soft);
 }
 
+/* مُهر گچی روی تخته: اگر این خط را نمی‌بینید، نسخهٔ جدید لود نشده است */
+.app__build {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin-top: 12px !important;
+  padding: 3px 12px;
+  font-size: 0.76rem !important;
+  font-weight: 400;
+  color: #f2ead6;
+  background: var(--board);
+  border: 2px dashed rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  transform: rotate(0.6deg);
+}
+
 /* ------------------ دکمه‌ها ------------------ */
 
 .btn {

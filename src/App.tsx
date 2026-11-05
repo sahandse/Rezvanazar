@@ -136,6 +136,7 @@ function App() {
       <header className="app__header">
         <h1>آکادمی قهرمانان علوم</h1>
         <p>پایه سوم ابتدایی — آموزگار و طراح: آیدا رضوان‌آذر</p>
+        <p className="app__build">🏫 نسخهٔ کلاس: {__APP_BUILD__}</p>
       </header>
 
       {!session && showLanding && <Landing onStart={() => setShowLanding(false)} />}
