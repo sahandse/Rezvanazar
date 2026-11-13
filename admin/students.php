@@ -1,0 +1,10 @@
+<?php
+require __DIR__.'/bootstrap.php';admin_required();
+$msg='';
+if($_SERVER['REQUEST_METHOD']==='POST'){csrf_check();$action=$_POST['action']??'';
+if($action==='add'){ $name=trim($_POST['name']??'');$username=trim($_POST['username']??'');$pass=$_POST['password']??'';$seat=(int)($_POST['seat']??0);
+if($name&&$username&&strlen($pass)>=8&&$seat>0){try{$s=$pdo->prepare('INSERT INTO students(seat,name,username,password_hash) VALUES(?,?,?,?)');$s->execute([$seat,$name,$username,password_hash($pass,PASSWORD_DEFAULT)]);$msg='دانش‌آموز اضافه شد.';}catch(Throwable $e){$msg='شماره صندلی یا نام‌کاربری تکراری است.';}}else$msg='اطلاعات معتبر نیست؛ رمز حداقل ۸ کاراکتر باشد.';}
+if($action==='toggle'){$s=$pdo->prepare('UPDATE students SET active=1-active WHERE id=?');$s->execute([(int)$_POST['id']]);$msg='وضعیت تغییر کرد.';}}
+$rows=$pdo->query('SELECT id,seat,name,username,active FROM students ORDER BY seat')->fetchAll();
+header_ui('مدیریت دانش‌آموزان');if($msg)echo '<p class="ok">'.e($msg).'</p>';
+?><div class="card"><h2>افزودن دانش‌آموز</h2><form method="post"><input type="hidden" name="csrf" value="<?=e(csrf_token())?>"><input type="hidden" name="action" value="add"><div class="grid"><label>شماره صندلی<input type="number" name="seat" min="1" max="30" required></label><label>نام و نام خانوادگی<input name="name" required></label><label>نام کاربری<input name="username" required></label><label>رمز اولیه (حداقل ۸)<input name="password" type="password" minlength="8" required></label></div><button>ثبت دانش‌آموز</button></form></div><h2>فهرست</h2><table><tr><th>صندلی</th><th>نام</th><th>کاربری</th><th>وضعیت</th><th>عملیات</th></tr><?php foreach($rows as $r):?><tr><td><?=e((string)$r['seat'])?></td><td><?=e($r['name'])?></td><td><?=e($r['username'])?></td><td><?=$r['active']?'فعال':'غیرفعال'?></td><td><form method="post"><input type="hidden" name="csrf" value="<?=e(csrf_token())?>"><input type="hidden" name="action" value="toggle"><input type="hidden" name="id" value="<?=e((string)$r['id'])?>"><button><?=$r['active']?'غیرفعال‌سازی':'فعال‌سازی'?></button></form></td></tr><?php endforeach;?></table><?php footer_ui();?>
